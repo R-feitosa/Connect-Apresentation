@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Tokens do ecossistema
+   ------------------------------------------------------------
+   Tailwind v4: o tema vive no CSS, nao num tailwind.config.js.
+   A paleta e escura e de baixo contraste de fundo de proposito —
+   o dourado do nucleo e o ciano do fluxo so "acendem" porque tudo
+   ao redor e contido. Se o fundo competir, o diagrama morre.
+   ============================================================ */
+@theme {
+  --color-fundo: #05080F;
+  --color-fundo-alto: #080D18;
+  --color-superficie: #0C1322;
+  --color-superficie-alta: #111A2C;
+  --color-borda: #1C2740;
+  --color-borda-forte: #2A3A5C;
+
+  --color-texto: #E8EEF9;
+  --color-texto-suave: #9AAAC4;
+  --color-texto-fraco: #64748F;
+
+  --color-hub: #D8B25F;
+  --color-hub-suave: #8A6F2E;
+  --color-fluxo: #5FD4E8;
+
+  --color-comercial: #E0A33E;
+  --color-juridico: #7C8CF8;
+  --color-pessoas: #4FC4A0;
+  --color-operacoes: #5AA9E6;
+  --color-eventos: #E07A9A;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-local), ui-monospace, SFMono-Regular, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-fundo);
+  color: var(--color-texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Trilho de conexao: o traco caminha do centro para fora.
+   `pathLength=1` no SVG normaliza o dash, entao a velocidade fica igual
+   em conexoes curtas e longas — sem isso, os nos mais proximos piscam
+   rapido e os distantes arrastam. */
+@keyframes correr-fluxo {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* So opacidade: `transform: scale` num circulo SVG com cx/cy em 0
+   desloca o desenho conforme o transform-origin resolvido, e o anel
+   saia de centro. Respirar de opacidade basta e nao move nada. */
+@keyframes pulsar-nucleo {
+  0%, 100% { stroke-opacity: 0.12; }
+  50%      { stroke-opacity: 0.32; }
+}
+
+@keyframes surgir {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.animar-surgir {
+  animation: surgir 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Respeita quem pediu menos movimento. Nao e enfeite: o diagrama
+   continua legivel parado, entao desligar nao custa informacao. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
