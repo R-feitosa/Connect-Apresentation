@@ -9,12 +9,7 @@ import { AntesDepois } from '@/components/secoes/AntesDepois'
 import { Beneficios } from '@/components/secoes/Beneficios'
 import { NovosMvps } from '@/components/secoes/NovosMvps'
 import { Rodape } from '@/components/secoes/Rodape'
-
-const FRASES_ENCERRAMENTO = [
-  'Um ecossistema',
-  'Uma base',
-  'Novas possibilidades',
-]
+import { FRASES_MARQUEE_ENCERRAMENTO } from '@/content/marquee'
 
 /**
  * A pagina e so a ORDEM das secoes.
@@ -35,7 +30,7 @@ export default function Home() {
         <AntesDepois />
         <Beneficios />
         <NovosMvps />
-        <Marquee itens={FRASES_ENCERRAMENTO} invertido className="my-4" />
+        <Marquee itens={FRASES_MARQUEE_ENCERRAMENTO} invertido className="my-4" />
       </main>
       <Rodape />
       <ModoEstande />

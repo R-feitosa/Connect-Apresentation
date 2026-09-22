@@ -8,6 +8,23 @@ import { FonteCentral } from '@/components/secoes/FonteCentral'
 import { AntesDepois } from '@/components/secoes/AntesDepois'
 import { Beneficios } from '@/components/secoes/Beneficios'
 import { NovosMvps } from '@/components/secoes/NovosMvps'
+import { Marquee } from '@/components/layout/Marquee'
+import { FRASES_MARQUEE_ENCERRAMENTO } from '@/content/marquee'
+
+/**
+ * Ultimo slide: a secao de escalabilidade MAIS a faixa de
+ * encerramento que, na pagina normal, fecha o scroll antes do
+ * rodape. Sem isto ela nao teria slide nenhum no loop — a lista de
+ * slides mapeia 1:1 com secoes, e a faixa nao e uma secao.
+ */
+function SlideFinal() {
+  return (
+    <>
+      <NovosMvps />
+      <Marquee itens={FRASES_MARQUEE_ENCERRAMENTO} invertido className="my-4" />
+    </>
+  )
+}
 
 const SLIDES = [
   Hero,
@@ -16,7 +33,7 @@ const SLIDES = [
   FonteCentral,
   AntesDepois,
   Beneficios,
-  NovosMvps,
+  SlideFinal,
 ]
 
 const TEMPO_POR_SLIDE_MS = 9000
