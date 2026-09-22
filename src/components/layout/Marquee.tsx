@@ -4,10 +4,15 @@ import { cn } from '@/lib/cn'
  * Faixa de texto corrida, na diagonal do site inteiro.
  *
  * E o elemento que faz a pagina parecer viva mesmo parada num loop de
- * TV: ninguem precisa rolar para perceber movimento. O conteudo aparece
- * duas vezes no DOM — e a tecnica padrao de marquee em CSS puro, sem
- * JS medindo largura, e a animacao em `globals.css` desloca exatamente
- * metade da faixa.
+ * TV: ninguem precisa rolar para perceber movimento.
+ *
+ * A duplicacao do conteudo tem que estar DENTRO da faixa que se move,
+ * nao em duas faixas irmas cada uma com sua propria copia. So assim
+ * "andar metade do proprio comprimento" (a animacao em `globals.css`)
+ * termina exatamente em cima da segunda copia — identica a primeira —
+ * e o corte de -50% de volta a 0% fica invisivel. Com a duplicacao do
+ * lado de fora, cada faixa so tinha meio conteudo: o loop saltava no
+ * meio do texto em vez de emendar.
  */
 export function Marquee({
   itens,
@@ -30,8 +35,6 @@ export function Marquee({
     >
       <div className="marquee-trilho flex shrink-0 items-center gap-10 whitespace-nowrap pr-10">
         <Trilho itens={itens} />
-      </div>
-      <div className="marquee-trilho flex shrink-0 items-center gap-10 whitespace-nowrap pr-10" aria-hidden>
         <Trilho itens={itens} />
       </div>
     </div>
