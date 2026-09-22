@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 const TEMPO_POR_PARADA_MS = 8000
 const ANCORAS = [
-  '#top',
+  '#hero',
   '#ecossistema',
   '#fluxo',
   '#fonte',
@@ -47,11 +47,11 @@ export function ModoEstande() {
   }, [])
 
   const avancar = useCallback(() => {
-    // "#top" e o <main> inteiro, nao uma secao — nunca tenta medir ou
-    // completar a rolagem dele, so usa como ponto de partida do loop.
+    // Todas as paradas, incluindo o hero (que tem o marquee no rodape
+    // dele), passam pela mesma checagem: se nao coube na tela, mostra
+    // o restante antes de seguir.
     const indiceAtual = indiceRef.current
-    const eTopo = indiceAtual === 0
-    const atual = eTopo ? null : document.querySelector(ANCORAS[indiceAtual])
+    const atual = document.querySelector(ANCORAS[indiceAtual])
     const sobraDaSecao = atual
       ? atual.getBoundingClientRect().height - window.innerHeight
       : 0
@@ -75,7 +75,7 @@ export function ModoEstande() {
     if (!ativo) return
     indiceRef.current = 0
     mostrouRestante.current = false
-    document.querySelector('#top')?.scrollIntoView({ behavior: 'smooth' })
+    document.querySelector(ANCORAS[0])?.scrollIntoView({ behavior: 'smooth' })
     timerRef.current = setInterval(avancar, TEMPO_POR_PARADA_MS)
     return () => {
       if (timerRef.current) clearInterval(timerRef.current)

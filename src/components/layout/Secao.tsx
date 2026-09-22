@@ -22,7 +22,7 @@ export function Secao({
     <section
       id={id}
       className={cn(
-        'scroll-mt-20 py-20 sm:py-28',
+        'scroll-mt-20 py-14 sm:py-20',
         comLinhaSuperior && 'border-t border-borda/60',
         className,
       )}

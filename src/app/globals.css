@@ -49,9 +49,12 @@ html {
      seguem o tamanho de fonte da raiz — um numero so aqui aumenta a
      pagina inteira de forma proporcional, sem reescrever cada
      componente. E para leitura a distancia (TV de estande), nao para
-     tela de colo: 112% e um passo perceptivel sem parecer fora de
-     escala num monitor comum. */
-  font-size: 112.5%;
+     tela de colo.
+     112.5% cortava conteudo no modo estande: a janela real de um
+     navegador (com barra de endereco, abas) tem bem menos altura util
+     que os 1080px "de laboratorio" usados pra testar. 106% e um meio
+     termo que sobra menos margem de erro. */
+  font-size: 106%;
 }
 
 /* Grao via SVG feTurbulence, embutido no fundo do body (nao numa

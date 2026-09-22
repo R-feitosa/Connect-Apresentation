@@ -12,7 +12,7 @@ const FRASES_MARQUEE = [
 
 export function Hero() {
   return (
-    <header className="relative flex min-h-[100svh] flex-col overflow-hidden pt-24">
+    <header id="hero" className="relative flex min-h-[100svh] flex-col overflow-hidden pt-24">
       <GradeFundo />
       <div
         aria-hidden
