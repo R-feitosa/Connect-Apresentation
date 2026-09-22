@@ -40,6 +40,12 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  /* O marquee sangra 6% para cada lado (`-mx-[6%] w-[112%]`) para
+     parecer que corre para fora da borda da tela. Sem isso aqui, essa
+     sangria empurra a largura do documento alem da viewport e vira
+     scroll horizontal de verdade — visivel sobretudo em celular, onde
+     6% de sobra ja e uma faixa em branco que da para arrastar. */
+  overflow-x: hidden;
 }
 
 /* Grao via SVG feTurbulence, embutido no fundo do body (nao numa
@@ -59,6 +65,7 @@ body {
   color: var(--color-texto);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 ::selection {
