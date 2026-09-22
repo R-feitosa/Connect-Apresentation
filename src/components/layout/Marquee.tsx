@@ -23,7 +23,7 @@ const MINIMO_ITENS_POR_METADE = 16
 const SEGUNDOS_POR_ITEM = 4
 
 /**
- * Faixa de texto corrida, na diagonal do site inteiro.
+ * Faixa de texto corrida na horizontal.
  *
  * E o elemento que faz a pagina parecer viva mesmo parada num loop de
  * TV: ninguem precisa rolar para perceber movimento.
@@ -40,6 +40,8 @@ export function Marquee({
   className,
 }: {
   itens: readonly string[]
+  /** Roda a faixa no sentido contrario, para diferenciar duas faixas
+   * na mesma pagina sem depender de inclinacao. */
   invertido?: boolean
   className?: string
 }) {
@@ -50,15 +52,16 @@ export function Marquee({
     <div
       aria-hidden
       className={cn(
-        'group relative -mx-[6%] flex w-[112%] overflow-hidden border-y border-borda/70 bg-superficie/40 py-4',
-        invertido && '-rotate-1',
-        !invertido && 'rotate-1',
+        'relative flex w-full overflow-hidden border-y border-borda/70 bg-superficie/40 py-4',
         className,
       )}
     >
       <div
         className="marquee-trilho flex shrink-0 items-center whitespace-nowrap"
-        style={{ animationDuration: `${duracaoSegundos}s` }}
+        style={{
+          animationDuration: `${duracaoSegundos}s`,
+          animationDirection: invertido ? 'reverse' : 'normal',
+        }}
       >
         <Metade itens={itens} passadas={passadas} />
         <Metade itens={itens} passadas={passadas} />
