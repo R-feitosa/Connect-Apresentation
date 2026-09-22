@@ -40,12 +40,18 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
-  /* O marquee sangra 6% para cada lado (`-mx-[6%] w-[112%]`) para
-     parecer que corre para fora da borda da tela. Sem isso aqui, essa
-     sangria empurra a largura do documento alem da viewport e vira
-     scroll horizontal de verdade — visivel sobretudo em celular, onde
-     6% de sobra ja e uma faixa em branco que da para arrastar. */
+  /* Trava scroll horizontal indevido — util de qualquer forma como
+     rede de seguranca contra qualquer elemento que sangre para fora
+     da borda no futuro. */
   overflow-x: hidden;
+  /* Escala tudo (texto, espacamento, diagramas) um pouco acima do
+     tamanho de tela normal: quase todo o site usa unidades `rem`, que
+     seguem o tamanho de fonte da raiz — um numero so aqui aumenta a
+     pagina inteira de forma proporcional, sem reescrever cada
+     componente. E para leitura a distancia (TV de estande), nao para
+     tela de colo: 112% e um passo perceptivel sem parecer fora de
+     escala num monitor comum. */
+  font-size: 112.5%;
 }
 
 /* Grao via SVG feTurbulence, embutido no fundo do body (nao numa
