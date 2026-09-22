@@ -57,20 +57,27 @@ html {
   font-size: 106%;
 }
 
-/* Grao via SVG feTurbulence, embutido no fundo do body (nao numa
-   camada `position: fixed` separada). Um layer fixo com
-   `mix-blend-mode` fica sempre por cima e obriga o navegador a
-   recompor esse blend a cada frame contra qualquer coisa animando por
-   baixo (marquee, pulso do nucleo) — em GPU integrada isso pesa muito.
-   Como camada de fundo comum, o grao e pintado uma vez com o resto do
-   body e nao recompoe nada durante as animacoes da pagina. */
-body {
+/* Grao via SVG feTurbulence, embutido no fundo (nao numa camada
+   `position: fixed` separada). Um layer fixo com `mix-blend-mode`
+   fica sempre por cima e obriga o navegador a recompor esse blend a
+   cada frame contra qualquer coisa animando por baixo (marquee, pulso
+   do nucleo) — em GPU integrada isso pesa muito. Como camada de fundo
+   comum, o grao e pintado uma vez com o resto e nao recompoe nada
+   durante as animacoes da pagina.
+   Em classe (nao soldado no seletor `body`) porque o overlay do modo
+   estande — um `position: fixed` por cima da pagina real — precisa do
+   mesmo fundo, senao o vao das bordas quando um slide encolhe pra
+   caber deixaria a pagina de verdade transparecer por tras. */
+.fundo-atlas {
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"),
     radial-gradient(circle at top, rgba(184, 147, 90, 0.10), transparent 28%),
     linear-gradient(180deg, var(--color-fundo) 0%, var(--color-fundo-alto) 100%);
   background-blend-mode: overlay, normal, normal;
   background-repeat: repeat, no-repeat, no-repeat;
+}
+
+body {
   color: var(--color-texto);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;

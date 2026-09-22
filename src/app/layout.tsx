@@ -46,7 +46,7 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${sourceSerif.variable} ${spectral.variable} ${mono.variable}`}
     >
-      <body className="font-sans antialiased">{children}</body>
+      <body className="fundo-atlas font-sans antialiased">{children}</body>
     </html>
   )
 }

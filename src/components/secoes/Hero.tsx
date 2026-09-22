@@ -62,7 +62,7 @@ export function Hero() {
         </dl>
       </Container>
 
-      <Marquee itens={FRASES_MARQUEE} className="mt-16" />
+      <Marquee itens={FRASES_MARQUEE} className="mt-6" />
     </header>
   )
 }
