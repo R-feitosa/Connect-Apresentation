@@ -21,7 +21,8 @@ export function Cartao({
       className={cn(
         'relative rounded-xl border border-borda bg-superficie/70 p-6',
         'bg-gradient-to-b from-superficie-alta/60 to-superficie/40',
-        comBrilho && 'transition-colors duration-300 hover:border-borda-forte',
+        comBrilho &&
+          'transition-all duration-300 hover:-translate-y-1 hover:border-hub/40 hover:shadow-[0_0_0_1px_rgba(228,191,107,0.08),0_20px_40px_-20px_rgba(228,191,107,0.25)]',
         className,
       )}
     >

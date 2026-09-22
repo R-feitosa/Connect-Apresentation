@@ -26,6 +26,14 @@ npm test           # testes da geometria do diagrama
 
 Requer Node 20 ou superior (o projeto foi montado no Node 22).
 
+## Modo estande (loop de TV)
+
+Para deixar a página rodando sozinha numa TV, abra com `?tv=1` na URL
+(ex.: `https://.../?tv=1`). Ela avança de seção em seção automaticamente
+e volta ao topo ao terminar, sem precisar de ninguém rolando a tela. O
+mesmo comportamento pode ser ligado a qualquer momento pelo botão
+"Modo estande" no canto inferior direito.
+
 ## Como o conteúdo muda
 
 Nenhum componente precisa ser tocado para mudar o que a página diz:
@@ -54,7 +62,7 @@ src/
 ├── types/                   contratos do domínio
 ├── lib/                     geometria do diagrama, cores, utilitários
 └── components/
-    ├── layout/              Container, Seção, TítuloSeção, Navegação
+    ├── layout/              Container, Seção, TítuloSeção, Navegação, Marquee, ModoEstande
     ├── ui/                  Cartão, Etiqueta, ícones
     ├── diagramas/           órbita, fluxo, esteira de MVP, grade
     └── secoes/              uma por bloco da página

@@ -14,6 +14,7 @@ export function FonteCentral() {
   return (
     <Secao id="fonte">
       <TituloSecao
+        indice="03"
         etiqueta="Fonte central"
         titulo="O que não se duplica em lugar nenhum"
         descricao="As informações mais importantes do negócio têm um único dono e passam a ser compartilhadas por todos os módulos, sem recriar identidade em cada solução."

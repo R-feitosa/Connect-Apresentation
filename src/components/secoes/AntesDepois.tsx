@@ -14,6 +14,7 @@ export function AntesDepois() {
   return (
     <Secao id="antes-depois">
       <TituloSecao
+        indice="04"
         etiqueta="Antes e depois"
         titulo="Do caos operacional ao ecossistema integrado"
         descricao="O problema não era só tecnologia: eram processos repetidos, cadastros duplicados e decisões tomadas com informações diferentes. Atlas mudou esse cenário ao unificar a base e o comportamento do negócio."

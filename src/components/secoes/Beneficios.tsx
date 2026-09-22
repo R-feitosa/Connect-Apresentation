@@ -8,6 +8,7 @@ export function Beneficios() {
   return (
     <Secao id="beneficios">
       <TituloSecao
+        indice="05"
         etiqueta="Benefícios"
         titulo="O que a arquitetura integrada entrega"
         descricao="Não são promessas de projeto: são consequências diretas de haver um único lugar onde o dado mestre nasce."

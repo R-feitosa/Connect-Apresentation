@@ -30,7 +30,8 @@
   --color-operacoes: #5AA9E6;
   --color-eventos: #E07A9A;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-sans-local), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), var(--font-sans-local), ui-sans-serif, sans-serif;
   --font-mono: var(--font-mono-local), ui-monospace, SFMono-Regular, monospace;
 }
 
@@ -51,6 +52,37 @@ body {
 ::selection {
   background: rgba(228, 191, 107, 0.28);
   color: var(--color-texto);
+}
+
+/* Grao fixo sobre a pagina inteira via SVG feTurbulence data-URI.
+   Uma imagem geraria requisicao de rede; o filtro e puro CSS/SVG e
+   custa perto de zero. Sem isso o fundo escuro em TV de LED grande
+   fica com "banding" visivel nos degrades. */
+.textura-grao {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Faixa de texto corrida (marquee). Duplicamos o conteudo no JSX e
+   deslocamos exatamente 50%: como as duas copias sao identicas, o
+   ponto em que a primeira sai coincide com o em que a segunda entra,
+   sem salto. */
+@keyframes deslizar-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-trilho {
+  animation: deslizar-marquee 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-trilho { animation: none; }
 }
 
 /* Trilho de conexao: o traco caminha do centro para fora.

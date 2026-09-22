@@ -41,9 +41,9 @@ export function Navegacao() {
     >
       <Container className="flex h-14 items-center justify-between">
         <a href="#top" className="flex items-center gap-2.5">
-          <span className="h-2 w-2 rounded-full bg-hub" />
-          <span className="text-sm font-semibold tracking-tight text-texto">
-            Ecossistema Atlas
+          <span className="h-2 w-2 animate-pulse rounded-full bg-hub" />
+          <span className="font-display text-sm tracking-tight text-texto">
+            Atlas
           </span>
         </a>
         <ul className="hidden gap-7 md:flex">
