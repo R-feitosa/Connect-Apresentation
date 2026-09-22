@@ -136,6 +136,22 @@ body {
   animation: surgir 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* Transicao entre slides do modo estande — o efeito de "rolagem" que
+   o slide-show, ao trocar de secao inteira em vez de rolar a pagina
+   de verdade, tinha perdido. Slide de saida e o de entrada se movem
+   juntos, na mesma direcao: parece um scroll de verdade, nao um corte
+   seco. A duracao (550ms) precisa bater com `DURACAO_TRANSICAO_MS` em
+   `ModoEstande.tsx`. */
+@keyframes slide-sai-para-cima  { to   { transform: translateY(-100%); } }
+@keyframes slide-sai-para-baixo { to   { transform: translateY(100%); } }
+@keyframes slide-entra-de-baixo { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes slide-entra-de-cima  { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+
+.animar-slide-sai-cima   { animation: slide-sai-para-cima  550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.animar-slide-sai-baixo  { animation: slide-sai-para-baixo 550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.animar-slide-entra-baixo { animation: slide-entra-de-baixo 550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.animar-slide-entra-cima  { animation: slide-entra-de-cima  550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+
 /* Respeita quem pediu menos movimento. Nao e enfeite: o diagrama
    continua legivel parado, entao desligar nao custa informacao. */
 @media (prefers-reduced-motion: reduce) {

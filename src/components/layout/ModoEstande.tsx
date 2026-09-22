@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { cn } from '@/lib/cn'
 import { Hero } from '@/components/secoes/Hero'
 import { VisaoGeral } from '@/components/secoes/VisaoGeral'
 import { FluxoDeCadastro } from '@/components/secoes/FluxoDeCadastro'
@@ -38,6 +39,12 @@ const SLIDES = [
 
 const TEMPO_POR_SLIDE_MS = 9000
 
+/** Duracao da animacao de deslizar entre slides. O timeout que tira o
+ * slide de saida do ar (mais abaixo) usa um numero levemente maior,
+ * pra nao cortar a animacao no ultimo frame. Tem que bater com a
+ * duracao das classes `.animar-slide-*` em `globals.css`. */
+const DURACAO_TRANSICAO_MS = 550
+
 /**
  * Piloto automatico para rodar a pagina numa TV de estande.
  *
@@ -55,8 +62,18 @@ const TEMPO_POR_SLIDE_MS = 9000
  */
 export function ModoEstande() {
   const [ativo, setAtivo] = useState(false)
-  const [indice, setIndice] = useState(0)
+  const [estado, setEstado] = useState<{ indice: number; sentido: 1 | -1 }>({
+    indice: 0,
+    sentido: 1,
+  })
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const mudarSlide = useCallback((delta: 1 | -1) => {
+    setEstado((atual) => ({
+      indice: (atual.indice + delta + SLIDES.length) % SLIDES.length,
+      sentido: delta,
+    }))
+  }, [])
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -70,10 +87,8 @@ export function ModoEstande() {
 
   const reiniciarTemporizador = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current)
-    timerRef.current = setInterval(() => {
-      setIndice((i) => (i + 1) % SLIDES.length)
-    }, TEMPO_POR_SLIDE_MS)
-  }, [])
+    timerRef.current = setInterval(() => mudarSlide(1), TEMPO_POR_SLIDE_MS)
+  }, [mudarSlide])
 
   useEffect(() => {
     if (!ativo) return
@@ -81,7 +96,7 @@ export function ModoEstande() {
     // mesmo motivo do efeito de ativacao acima: e a forma segura de
     // reagir a uma mudanca externa sem disparar um set-state sincrono
     // dentro do proprio efeito.
-    const id = requestAnimationFrame(() => setIndice(0))
+    const id = requestAnimationFrame(() => setEstado({ indice: 0, sentido: 1 }))
     reiniciarTemporizador()
     return () => {
       cancelAnimationFrame(id)
@@ -109,26 +124,75 @@ export function ModoEstande() {
     if (!ativo) return
     function aoTeclar(evento: KeyboardEvent) {
       if (evento.key === 'ArrowRight') {
-        setIndice((i) => (i + 1) % SLIDES.length)
+        mudarSlide(1)
         reiniciarTemporizador()
       } else if (evento.key === 'ArrowLeft') {
-        setIndice((i) => (i - 1 + SLIDES.length) % SLIDES.length)
+        mudarSlide(-1)
         reiniciarTemporizador()
       }
     }
     window.addEventListener('keydown', aoTeclar)
     return () => window.removeEventListener('keydown', aoTeclar)
-  }, [ativo, reiniciarTemporizador])
+  }, [ativo, mudarSlide, reiniciarTemporizador])
 
-  const SlideComponente = SLIDES[indice]
+  // Guarda o slide anterior so pelo tempo da transicao, pra ele poder
+  // "sair" enquanto o novo "entra" — o efeito de deslizar de verdade
+  // precisa dos dois montados ao mesmo tempo por um instante. Comparado
+  // durante a propria renderizacao (dois `useState`, nunca um ref): e o
+  // jeito que o React recomenda pra "lembrar" um valor do render
+  // anterior sem depender de efeito nenhum.
+  const [indiceAnterior, setIndiceAnterior] = useState(estado.indice)
+  const [saindo, setSaindo] = useState<{ indice: number; sentido: 1 | -1 } | null>(null)
+  if (indiceAnterior !== estado.indice) {
+    setSaindo({ indice: indiceAnterior, sentido: estado.sentido })
+    setIndiceAnterior(estado.indice)
+  }
+
+  useEffect(() => {
+    if (!saindo) return
+    const id = setTimeout(() => setSaindo(null), DURACAO_TRANSICAO_MS)
+    return () => clearTimeout(id)
+  }, [saindo])
+
+  const SlideAtual = SLIDES[estado.indice]
 
   return (
     <>
       {ativo && (
-        <div className="fundo-atlas fixed inset-0 z-40" aria-live="polite">
-          <Slide key={indice}>
-            <SlideComponente />
-          </Slide>
+        <div
+          className="fundo-atlas fixed inset-0 z-40 overflow-hidden"
+          aria-live="polite"
+        >
+          {saindo &&
+            (() => {
+              const SlideQueSai = SLIDES[saindo.indice]
+              return (
+                <div
+                  key={`sai-${saindo.indice}`}
+                  className={cn(
+                    'absolute inset-0',
+                    saindo.sentido === 1
+                      ? 'animar-slide-sai-cima'
+                      : 'animar-slide-sai-baixo',
+                  )}
+                >
+                  <Slide>
+                    <SlideQueSai />
+                  </Slide>
+                </div>
+              )
+            })()}
+          <div
+            key={`entra-${estado.indice}`}
+            className={cn(
+              'absolute inset-0',
+              estado.sentido === 1 ? 'animar-slide-entra-baixo' : 'animar-slide-entra-cima',
+            )}
+          >
+            <Slide>
+              <SlideAtual />
+            </Slide>
+          </div>
         </div>
       )}
       <button
