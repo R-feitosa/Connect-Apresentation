@@ -45,10 +45,7 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${manrope.variable} ${unbounded.variable} ${mono.variable}`}
     >
-      <body className="font-sans antialiased">
-        {children}
-        <div className="textura-grao" aria-hidden />
-      </body>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   )
 }

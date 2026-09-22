@@ -16,11 +16,11 @@ export function Hero() {
       <GradeFundo />
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-[42rem] w-[60rem] -translate-x-1/2 -translate-y-1/3 rounded-full bg-hub/[0.08] blur-[110px]"
+        className="pointer-events-none absolute left-1/2 top-0 h-[42rem] w-[60rem] -translate-x-1/2 -translate-y-1/3 rounded-full bg-hub/[0.08] blur-3xl"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-0 right-0 h-[26rem] w-[26rem] translate-x-1/3 translate-y-1/3 rounded-full bg-fluxo/[0.06] blur-[110px]"
+        className="pointer-events-none absolute bottom-0 right-0 h-[26rem] w-[26rem] translate-x-1/3 translate-y-1/3 rounded-full bg-fluxo/[0.06] blur-3xl"
       />
 
       <Container className="relative flex flex-1 flex-col justify-center">

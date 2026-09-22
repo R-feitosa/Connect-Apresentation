@@ -40,10 +40,20 @@ html {
   color-scheme: dark;
 }
 
+/* Grao via SVG feTurbulence, embutido no fundo do body (nao numa
+   camada `position: fixed` separada). Um layer fixo com
+   `mix-blend-mode` fica sempre por cima e obriga o navegador a
+   recompor esse blend a cada frame contra qualquer coisa animando por
+   baixo (marquee, pulso do nucleo) — em GPU integrada isso pesa muito.
+   Como camada de fundo comum, o grao e pintado uma vez com o resto do
+   body e nao recompoe nada durante as animacoes da pagina. */
 body {
   background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"),
     radial-gradient(circle at top, rgba(228, 191, 107, 0.12), transparent 28%),
     linear-gradient(180deg, var(--color-fundo) 0%, var(--color-fundo-alto) 100%);
+  background-blend-mode: overlay, normal, normal;
+  background-repeat: repeat, no-repeat, no-repeat;
   color: var(--color-texto);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -52,20 +62,6 @@ body {
 ::selection {
   background: rgba(228, 191, 107, 0.28);
   color: var(--color-texto);
-}
-
-/* Grao fixo sobre a pagina inteira via SVG feTurbulence data-URI.
-   Uma imagem geraria requisicao de rede; o filtro e puro CSS/SVG e
-   custa perto de zero. Sem isso o fundo escuro em TV de LED grande
-   fica com "banding" visivel nos degrades. */
-.textura-grao {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* Faixa de texto corrida (marquee). Duplicamos o conteudo no JSX e
@@ -79,6 +75,10 @@ body {
 
 .marquee-trilho {
   animation: deslizar-marquee 32s linear infinite;
+  /* Avisa o navegador para promover isto a uma camada de composicao
+     GPU separada desde o inicio, em vez de descobrir isso so no
+     primeiro frame animado. */
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {

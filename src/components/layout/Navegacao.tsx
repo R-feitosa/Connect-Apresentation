@@ -19,6 +19,11 @@ const ANCORAS = [
  * Sobre o hero ela fica transparente para nao cortar o titulo; a partir
  * dali recebe fundo e borda, senao o texto das secoes passa por baixo e
  * fica ilegivel.
+ *
+ * Fundo SOLIDO, sem `backdrop-blur`: um blur de fundo precisa reamostrar
+ * tudo que esta atras a cada frame enquanto a pagina rola, o que pesa
+ * muito em GPU integrada. Uma cor opaca da a mesma legibilidade sem
+ * esse custo continuo.
  */
 export function Navegacao() {
   const [rolou, setRolou] = useState(false)
@@ -35,7 +40,7 @@ export function Navegacao() {
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
         rolou
-          ? 'border-b border-borda bg-fundo/85 backdrop-blur-md'
+          ? 'border-b border-borda bg-fundo-alto'
           : 'border-b border-transparent',
       )}
     >

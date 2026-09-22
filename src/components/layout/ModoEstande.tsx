@@ -57,7 +57,7 @@ export function ModoEstande() {
     <button
       type="button"
       onClick={() => setAtivo((v) => !v)}
-      className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full border border-borda-forte bg-fundo-alto/90 px-4 py-2.5 font-mono text-[0.7rem] uppercase tracking-[0.15em] text-texto-suave shadow-lg backdrop-blur transition-colors hover:border-hub/50 hover:text-hub"
+      className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full border border-borda-forte bg-fundo-alto px-4 py-2.5 font-mono text-[0.7rem] uppercase tracking-[0.15em] text-texto-suave shadow-lg transition-colors hover:border-hub/50 hover:text-hub"
       aria-pressed={ativo}
     >
       <span
