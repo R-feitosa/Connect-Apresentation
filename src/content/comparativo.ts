@@ -9,27 +9,27 @@ import type { ParComparativo } from '@/types/ecossistema'
  */
 export const COMPARATIVO: readonly ParComparativo[] = [
   {
-    antes: 'Cada sistema com seu próprio cadastro de clientes',
-    depois: 'Um cadastro único, lido por todos',
+    antes: 'Cada operação mantinha seu próprio cadastro e processo',
+    depois: 'Toda aplicação lê a mesma fonte e compartilha a mesma realidade',
   },
   {
-    antes: 'A mesma empresa em três bases, com três grafias',
-    depois: 'Documento normalizado recusa a duplicata na hora',
+    antes: 'O mesmo cliente aparecia de forma diferente em cada sistema',
+    depois: 'A identidade é única e reconhecida em todo o ecossistema',
   },
   {
-    antes: 'Integração feita à mão, planilha a planilha',
-    depois: 'Os módulos leem a mesma fonte, sem exportação',
+    antes: 'Informações eram copiadas e reconcilhadas à mão',
+    depois: 'O dado circula sem duplicação nem retrabalho manual',
   },
   {
-    antes: 'Números que não fecham entre as áreas',
-    depois: 'Um número só, com a mesma origem para todo mundo',
+    antes: 'Dados divergiam entre comercial, jurídico e financeiro',
+    depois: 'As áreas chegam ao mesmo número e à mesma origem',
   },
   {
-    antes: 'Mudou o telefone: atualizar em cada sistema',
-    depois: 'Atualiza no HUB e vale em todos',
+    antes: 'Uma mudança exigia atualizar vários ambientes',
+    depois: 'Atualiza uma vez e todas as soluções enxergam a mesma versão',
   },
   {
-    antes: 'Sistema novo começa do zero, recriando tudo',
-    depois: 'Sistema novo nasce lendo o que já existe',
+    antes: 'Um novo sistema começava do zero, recriando regras',
+    depois: 'Novo módulo nasce sobre o ecossistema que já existe',
   },
 ]

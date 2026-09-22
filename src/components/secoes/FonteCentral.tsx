@@ -16,19 +16,22 @@ export function FonteCentral() {
       <TituloSecao
         etiqueta="Fonte central"
         titulo="O que não se duplica em lugar nenhum"
-        descricao="Estes registros têm um dono único. Os módulos leem daqui e complementam com o que é específico da sua área — nunca recriando a identidade."
+        descricao="As informações mais importantes do negócio têm um único dono e passam a ser compartilhadas por todos os módulos, sem recriar identidade em cada solução."
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {ENTIDADES_MESTRES.map((entidade) => (
           <Cartao key={entidade.codigo} comBrilho className="flex flex-col">
-            <h3 className="mb-2 text-base font-semibold text-texto">
-              {entidade.nome}
-            </h3>
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <h3 className="text-base font-semibold text-texto">
+                {entidade.nome}
+              </h3>
+              <span className="h-2.5 w-2.5 rounded-full bg-hub" aria-hidden />
+            </div>
             <p className="mb-5 flex-1 text-sm leading-relaxed text-texto-suave">
               {entidade.descricao}
             </p>
-            <Etiqueta mono>{entidade.tabela}</Etiqueta>
+            <Etiqueta mono className="w-fit">Base compartilhada</Etiqueta>
           </Cartao>
         ))}
       </div>
@@ -36,10 +39,9 @@ export function FonteCentral() {
       <div className="mt-8 rounded-xl border border-hub/25 bg-hub/[0.05] p-6">
         <p className="text-pretty leading-relaxed text-texto-suave">
           <strong className="font-medium text-hub">A regra que sustenta tudo:</strong>{' '}
-          um módulo nunca cria cadastro mestre paralelo. Se a informação já
-          existe no HUB, ele a referencia. Se não existe, ele a cria{' '}
-          <em className="not-italic text-texto">no HUB</em> — e não numa tabela
-          própria que ninguém mais enxerga.
+          um módulo nunca cria a identidade mestre do zero. Se a informação já
+          existe no Atlas, ela é reutilizada. Se ainda não existe, ela nasce no
+          próprio ecossistema e fica disponível para quem precisa.
         </p>
       </div>
     </Secao>

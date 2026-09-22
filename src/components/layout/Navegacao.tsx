@@ -5,10 +5,10 @@ import { Container } from './Container'
 import { cn } from '@/lib/cn'
 
 const ANCORAS = [
-  { href: '#ecossistema', rotulo: 'Ecossistema' },
+  { href: '#ecossistema', rotulo: 'Atlas' },
   { href: '#fluxo', rotulo: 'Fluxo' },
-  { href: '#fonte', rotulo: 'Fonte central' },
-  { href: '#antes-depois', rotulo: 'Antes e depois' },
+  { href: '#fonte', rotulo: 'Fonte' },
+  { href: '#antes-depois', rotulo: 'Problema' },
   { href: '#beneficios', rotulo: 'Benefícios' },
   { href: '#mvps', rotulo: 'Escala' },
 ]

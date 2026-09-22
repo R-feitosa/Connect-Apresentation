@@ -15,20 +15,20 @@ export function AntesDepois() {
     <Secao id="antes-depois">
       <TituloSecao
         etiqueta="Antes e depois"
-        titulo="O que mudou na prática"
-        descricao="Cada linha da direita responde diretamente à linha da esquerda."
+        titulo="Do caos operacional ao ecossistema integrado"
+        descricao="O problema não era só tecnologia: eram processos repetidos, cadastros duplicados e decisões tomadas com informações diferentes. Atlas mudou esse cenário ao unificar a base e o comportamento do negócio."
       />
 
       <div className="overflow-hidden rounded-xl border border-borda">
         <div className="grid grid-cols-1 border-b border-borda bg-superficie/60 sm:grid-cols-2">
           <div className="border-b border-borda px-6 py-4 sm:border-b-0 sm:border-r">
             <span className="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-texto-fraco">
-              Antes — sistemas isolados
+              Antes — aplicações isoladas
             </span>
           </div>
           <div className="px-6 py-4">
             <span className="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-hub">
-              Depois — ecossistema integrado
+              Depois — Atlas como base compartilhada
             </span>
           </div>
         </div>

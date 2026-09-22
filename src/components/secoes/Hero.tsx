@@ -6,37 +6,45 @@ export function Hero() {
   return (
     <header className="relative overflow-hidden pb-24 pt-24 sm:pb-32 sm:pt-32">
       <GradeFundo />
-      {/* Brilho dourado atras do titulo: o nucleo "vazando" para o texto. */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-0 h-[36rem] w-[52rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-hub/[0.07] blur-[100px]"
       />
 
       <Container className="relative">
+        <div className="mb-8 flex flex-wrap gap-3 text-xs uppercase tracking-[0.2em] text-texto-suave">
+          <span className="rounded-full border border-hub/30 bg-hub/[0.06] px-3 py-1 text-hub">
+            Problema
+          </span>
+          <span className="rounded-full border border-borda bg-superficie/50 px-3 py-1">
+            Solução
+          </span>
+        </div>
+
         <p className="mb-6 font-mono text-xs uppercase tracking-[0.25em] text-hub">
           Ecossistema Atlas — R. Feitosa Group
         </p>
 
-        <h1 className="max-w-4xl text-balance text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl">
-          Um ecossistema.
+        <h1 className="max-w-4xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight sm:text-6xl">
+          Antes, cada aplicação
           <br />
-          <span className="text-hub">Uma fonte de verdade.</span>
+          <span className="text-hub">vivia no seu próprio mundo.</span>
           <br />
-          Múltiplas soluções.
+          Agora, elas compartilham o mesmo Atlas.
         </h1>
 
         <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-texto-suave">
-          Os sistemas do grupo deixaram de manter cadastros paralelos. Pessoas,
-          empresas, papéis e acessos nascem uma única vez no{' '}
-          <strong className="font-medium text-texto">Atlas Hub</strong> e são
-          reutilizados por todos os módulos — cada um acrescentando apenas o que
-          pertence à sua própria regra de negócio.
+          O problema era claro: várias soluções operavam com cadastros,
+          processos e regras diferentes, sem falar entre si. A remodelagem criou
+          o <strong className="font-medium text-texto">Atlas</strong>, um
+          ecossistema em que todas as aplicações usam a mesma base e a mesma
+          fonte de verdade para evoluir em conjunto.
         </p>
 
         <dl className="mt-14 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3">
-          <Metrica valor={String(MODULOS.length)} rotulo="sistemas integrados" />
-          <Metrica valor={String(ENTIDADES_MESTRES.length)} rotulo="entidades mestres" />
-          <Metrica valor="1" rotulo="cadastro de origem" destacado />
+          <Metrica valor={String(MODULOS.length)} rotulo="sistemas conectados" />
+          <Metrica valor={String(ENTIDADES_MESTRES.length)} rotulo="campos de origem" />
+          <Metrica valor="1" rotulo="fonte de verdade" destacado />
         </dl>
       </Container>
     </header>

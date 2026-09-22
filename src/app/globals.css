@@ -10,19 +10,19 @@
    ============================================================ */
 @theme {
   --color-fundo: #05080F;
-  --color-fundo-alto: #080D18;
-  --color-superficie: #0C1322;
-  --color-superficie-alta: #111A2C;
-  --color-borda: #1C2740;
-  --color-borda-forte: #2A3A5C;
+  --color-fundo-alto: #0A1020;
+  --color-superficie: #0F182A;
+  --color-superficie-alta: #141F35;
+  --color-borda: #243252;
+  --color-borda-forte: #2F3F63;
 
-  --color-texto: #E8EEF9;
-  --color-texto-suave: #9AAAC4;
-  --color-texto-fraco: #64748F;
+  --color-texto: #EDF4FF;
+  --color-texto-suave: #A9B9D2;
+  --color-texto-fraco: #6E7E9E;
 
-  --color-hub: #D8B25F;
-  --color-hub-suave: #8A6F2E;
-  --color-fluxo: #5FD4E8;
+  --color-hub: #E4BF6B;
+  --color-hub-suave: #A98036;
+  --color-fluxo: #79D7EE;
 
   --color-comercial: #E0A33E;
   --color-juridico: #7C8CF8;
@@ -40,9 +40,17 @@ html {
 }
 
 body {
-  background-color: var(--color-fundo);
+  background:
+    radial-gradient(circle at top, rgba(228, 191, 107, 0.12), transparent 28%),
+    linear-gradient(180deg, var(--color-fundo) 0%, var(--color-fundo-alto) 100%);
   color: var(--color-texto);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(228, 191, 107, 0.28);
+  color: var(--color-texto);
 }
 
 /* Trilho de conexao: o traco caminha do centro para fora.

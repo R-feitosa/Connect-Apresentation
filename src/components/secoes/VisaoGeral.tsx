@@ -7,8 +7,8 @@ export function VisaoGeral() {
     <Secao id="ecossistema" comLinhaSuperior={false}>
       <TituloSecao
         etiqueta="Visão geral"
-        titulo="O HUB no centro, os módulos ao redor"
-        descricao="Cada linha é uma leitura de dado mestre saindo do centro. Nenhum módulo mantém o próprio cadastro de pessoas ou empresas — todos leem o mesmo registro e escrevem apenas o que é seu."
+        titulo="Atlas no centro, aplicações conectadas ao mesmo registro"
+        descricao="O ecossistema deixa de ser um conjunto de ferramentas paralelas para virar uma plataforma única: cada módulo usa o mesmo universo de dados e acrescenta apenas a sua própria regra de negócio."
       />
       <OrbitaEcossistema />
     </Secao>
