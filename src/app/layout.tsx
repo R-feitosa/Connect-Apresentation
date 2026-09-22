@@ -1,26 +1,27 @@
 import type { Metadata } from 'next'
-import { Manrope, Unbounded, JetBrains_Mono } from 'next/font/google'
+import { Source_Serif_4, Spectral, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
 /**
- * Corpo de texto. Manrope no lugar do Inter de sempre: mesma legibilidade
- * em telas pequenas, mas com um pouco mais de carater nas curvas — e o
- * suficiente para nao competir com a Unbounded do titulo.
+ * Corpo de texto. Serifada de proposito: e a tese da direcao "Atlas
+ * cartografico" — nada de grotesca geometrica generica, o texto todo
+ * le como pagina de mapa antigo, nao como dashboard de SaaS.
  */
-const manrope = Manrope({
+const sourceSerif = Source_Serif_4({
   subsets: ['latin'],
+  weight: ['400', '500', '600'],
   variable: '--font-sans-local',
   display: 'swap',
 })
 
 /**
- * Fonte de exibicao. Geometrica, com o "U" fechado e cantos quase
- * quadrados — parece desenhada para um logo de mapa, o que casa com o
- * nome Atlas. So aparece em titulos grandes; em corpo de texto ela
- * pesaria demais.
+ * Fonte de exibicao. Serifa com desenho de atlas de biblioteca —
+ * casa com o nome Atlas de forma literal, nao generica. So aparece em
+ * titulos grandes; o peso dela em corpo de texto cansaria a leitura.
  */
-const unbounded = Unbounded({
+const spectral = Spectral({
   subsets: ['latin'],
+  weight: ['400', '500', '600'],
   variable: '--font-display',
   display: 'swap',
 })
@@ -43,7 +44,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${manrope.variable} ${unbounded.variable} ${mono.variable}`}
+      className={`${sourceSerif.variable} ${spectral.variable} ${mono.variable}`}
     >
       <body className="font-sans antialiased">{children}</body>
     </html>

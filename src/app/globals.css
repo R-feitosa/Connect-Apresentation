@@ -1,28 +1,30 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Tokens do ecossistema
+   Tokens do ecossistema — direcao "Atlas cartografico"
    ------------------------------------------------------------
    Tailwind v4: o tema vive no CSS, nao num tailwind.config.js.
-   A paleta e escura e de baixo contraste de fundo de proposito —
-   o dourado do nucleo e o ciano do fluxo so "acendem" porque tudo
-   ao redor e contido. Se o fundo competir, o diagrama morre.
+   Fundo tinta-da-china, nucleo em latao fosco (nao dourado
+   brilhante) e fluxo em verde-azulado de linha-d'agua — a paleta
+   de um mapa antigo, nao de um dashboard de SaaS. Baixo contraste
+   de fundo de proposito: o latao e o verde-azulado so "acendem"
+   porque tudo ao redor e contido.
    ============================================================ */
 @theme {
-  --color-fundo: #05080F;
-  --color-fundo-alto: #0A1020;
-  --color-superficie: #0F182A;
-  --color-superficie-alta: #141F35;
-  --color-borda: #243252;
-  --color-borda-forte: #2F3F63;
+  --color-fundo: #0B0F14;
+  --color-fundo-alto: #10161D;
+  --color-superficie: #121821;
+  --color-superficie-alta: #1A2330;
+  --color-borda: #1E2733;
+  --color-borda-forte: #2C3A48;
 
-  --color-texto: #EDF4FF;
-  --color-texto-suave: #A9B9D2;
-  --color-texto-fraco: #6E7E9E;
+  --color-texto: #EAEFF3;
+  --color-texto-suave: #93A2AC;
+  --color-texto-fraco: #5E6C76;
 
-  --color-hub: #E4BF6B;
-  --color-hub-suave: #A98036;
-  --color-fluxo: #79D7EE;
+  --color-hub: #B8935A;
+  --color-hub-suave: #8C7040;
+  --color-fluxo: #3E6E76;
 
   --color-comercial: #E0A33E;
   --color-juridico: #7C8CF8;
@@ -50,7 +52,7 @@ html {
 body {
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"),
-    radial-gradient(circle at top, rgba(228, 191, 107, 0.12), transparent 28%),
+    radial-gradient(circle at top, rgba(184, 147, 90, 0.10), transparent 28%),
     linear-gradient(180deg, var(--color-fundo) 0%, var(--color-fundo-alto) 100%);
   background-blend-mode: overlay, normal, normal;
   background-repeat: repeat, no-repeat, no-repeat;
@@ -60,7 +62,7 @@ body {
 }
 
 ::selection {
-  background: rgba(228, 191, 107, 0.28);
+  background: rgba(184, 147, 90, 0.32);
   color: var(--color-texto);
 }
 

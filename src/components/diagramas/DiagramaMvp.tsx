@@ -5,7 +5,7 @@ import { COR_HUB } from '@/lib/cores'
 /**
  * A esteira de um MVP novo.
  *
- * Os passos que REAPROVEITAM sao dourados; os que exigem construir sao
+ * Os passos que REAPROVEITAM sao em latão; os que exigem construir sao
  * neutros. Contar as cores responde a pergunta da secao sem ler uma
  * palavra: tres de cinco ja estao prontos, e so um e trabalho novo de
  * verdade.

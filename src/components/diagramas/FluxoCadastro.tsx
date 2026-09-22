@@ -9,7 +9,7 @@ import { cn } from '@/lib/cn'
 /**
  * A esteira de um cadastro, por tipo de pessoa.
  *
- * O SEGUNDO passo e sempre "Nasce no HUB", em dourado, em todos os
+ * O SEGUNDO passo e sempre "Nasce no HUB", em latão, em todos os
  * fluxos. Trocar de aba muda quem chega e muda onde termina, mas a
  * coluna do meio fica parada — e essa imobilidade e o argumento. Se cada
  * fluxo tivesse um desenho proprio, o leitor veria quatro processos; do
