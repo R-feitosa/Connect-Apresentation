@@ -26,6 +26,10 @@
   --color-hub: #212965;
   --color-hub-suave: #3A3F7A;
   --color-fluxo: #6D0001;
+  /* Dourado, emprestado da familia Connect Academy/Valley do manual de
+     marca — usado so em pontos pequenos (marquee, selos) como um brilho
+     ocasional sobre o navy, nunca como cor de texto corrido. */
+  --color-acento: #F5CD55;
 
   --color-comercial: #966618;
   --color-juridico: #475DF5;

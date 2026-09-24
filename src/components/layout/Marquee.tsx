@@ -52,7 +52,7 @@ export function Marquee({
     <div
       aria-hidden
       className={cn(
-        'relative flex w-full overflow-hidden border-y border-borda/70 bg-superficie/40 py-4',
+        'relative flex w-full overflow-hidden border-y-2 border-hub bg-hub py-4',
         className,
       )}
     >
@@ -91,10 +91,15 @@ function Trilho({ itens }: { itens: readonly string[] }) {
     <>
       {itens.map((item, i) => (
         <span key={i} className="flex items-center gap-10">
-          <span className="font-display text-lg uppercase tracking-tight text-texto-suave sm:text-xl">
+          <span
+            className={cn(
+              'font-display text-lg font-bold uppercase tracking-tight sm:text-xl',
+              i % 2 === 0 ? 'text-acento' : 'text-superficie',
+            )}
+          >
             {item}
           </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-hub" />
+          <span className="h-1.5 w-1.5 rounded-full bg-acento" />
         </span>
       ))}
     </>
