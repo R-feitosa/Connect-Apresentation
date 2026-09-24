@@ -2,17 +2,11 @@ import { Container } from '@/components/layout/Container'
 import { Marquee } from '@/components/layout/Marquee'
 import { GradeFundo } from '@/components/diagramas/GradeFundo'
 import { MODULOS, ENTIDADES_MESTRES } from '@/content/ecossistema'
-
-const FRASES_MARQUEE = [
-  'Sistemas isolados',
-  'Dados fragmentados',
-  'Um ecossistema',
-  'Uma única fonte de verdade',
-]
+import { FRASES_MARQUEE_HERO } from '@/content/marquee'
 
 export function Hero() {
   return (
-    <header className="relative flex min-h-[100svh] flex-col overflow-hidden pt-24">
+    <header id="hero" className="relative flex min-h-[100svh] flex-col overflow-hidden pt-24">
       <GradeFundo />
       <div
         aria-hidden
@@ -62,7 +56,7 @@ export function Hero() {
         </dl>
       </Container>
 
-      <Marquee itens={FRASES_MARQUEE} className="mt-16" />
+      <Marquee itens={FRASES_MARQUEE_HERO} className="mt-6" />
     </header>
   )
 }

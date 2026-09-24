@@ -1,28 +1,30 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Tokens do ecossistema
+   Tokens do ecossistema — direcao "Atlas cartografico"
    ------------------------------------------------------------
    Tailwind v4: o tema vive no CSS, nao num tailwind.config.js.
-   A paleta e escura e de baixo contraste de fundo de proposito —
-   o dourado do nucleo e o ciano do fluxo so "acendem" porque tudo
-   ao redor e contido. Se o fundo competir, o diagrama morre.
+   Fundo tinta-da-china, nucleo em latao fosco (nao dourado
+   brilhante) e fluxo em verde-azulado de linha-d'agua — a paleta
+   de um mapa antigo, nao de um dashboard de SaaS. Baixo contraste
+   de fundo de proposito: o latao e o verde-azulado so "acendem"
+   porque tudo ao redor e contido.
    ============================================================ */
 @theme {
-  --color-fundo: #05080F;
-  --color-fundo-alto: #0A1020;
-  --color-superficie: #0F182A;
-  --color-superficie-alta: #141F35;
-  --color-borda: #243252;
-  --color-borda-forte: #2F3F63;
+  --color-fundo: #0B0F14;
+  --color-fundo-alto: #10161D;
+  --color-superficie: #121821;
+  --color-superficie-alta: #1A2330;
+  --color-borda: #1E2733;
+  --color-borda-forte: #2C3A48;
 
-  --color-texto: #EDF4FF;
-  --color-texto-suave: #A9B9D2;
-  --color-texto-fraco: #6E7E9E;
+  --color-texto: #EAEFF3;
+  --color-texto-suave: #93A2AC;
+  --color-texto-fraco: #5E6C76;
 
-  --color-hub: #E4BF6B;
-  --color-hub-suave: #A98036;
-  --color-fluxo: #79D7EE;
+  --color-hub: #B8935A;
+  --color-hub-suave: #8C7040;
+  --color-fluxo: #3E6E76;
 
   --color-comercial: #E0A33E;
   --color-juridico: #7C8CF8;
@@ -38,29 +40,52 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  /* Trava scroll horizontal indevido — util de qualquer forma como
+     rede de seguranca contra qualquer elemento que sangre para fora
+     da borda no futuro. */
+  overflow-x: hidden;
+  /* Escala tudo (texto, espacamento, diagramas) um pouco acima do
+     tamanho de tela normal: quase todo o site usa unidades `rem`, que
+     seguem o tamanho de fonte da raiz — um numero so aqui aumenta a
+     pagina inteira de forma proporcional, sem reescrever cada
+     componente. E para leitura a distancia (TV de estande), nao para
+     tela de colo.
+     112.5% cortava conteudo no modo estande: a janela real de um
+     navegador (com barra de endereco, abas) tem bem menos altura util
+     que os 1080px "de laboratorio" usados pra testar. 106% e um meio
+     termo que sobra menos margem de erro. */
+  font-size: 106%;
 }
 
-/* Grao via SVG feTurbulence, embutido no fundo do body (nao numa
-   camada `position: fixed` separada). Um layer fixo com
-   `mix-blend-mode` fica sempre por cima e obriga o navegador a
-   recompor esse blend a cada frame contra qualquer coisa animando por
-   baixo (marquee, pulso do nucleo) — em GPU integrada isso pesa muito.
-   Como camada de fundo comum, o grao e pintado uma vez com o resto do
-   body e nao recompoe nada durante as animacoes da pagina. */
-body {
+/* Grao via SVG feTurbulence, embutido no fundo (nao numa camada
+   `position: fixed` separada). Um layer fixo com `mix-blend-mode`
+   fica sempre por cima e obriga o navegador a recompor esse blend a
+   cada frame contra qualquer coisa animando por baixo (marquee, pulso
+   do nucleo) — em GPU integrada isso pesa muito. Como camada de fundo
+   comum, o grao e pintado uma vez com o resto e nao recompoe nada
+   durante as animacoes da pagina.
+   Em classe (nao soldado no seletor `body`) porque o overlay do modo
+   estande — um `position: fixed` por cima da pagina real — precisa do
+   mesmo fundo, senao o vao das bordas quando um slide encolhe pra
+   caber deixaria a pagina de verdade transparecer por tras. */
+.fundo-atlas {
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"),
-    radial-gradient(circle at top, rgba(228, 191, 107, 0.12), transparent 28%),
+    radial-gradient(circle at top, rgba(184, 147, 90, 0.10), transparent 28%),
     linear-gradient(180deg, var(--color-fundo) 0%, var(--color-fundo-alto) 100%);
   background-blend-mode: overlay, normal, normal;
   background-repeat: repeat, no-repeat, no-repeat;
+}
+
+body {
   color: var(--color-texto);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 ::selection {
-  background: rgba(228, 191, 107, 0.28);
+  background: rgba(184, 147, 90, 0.32);
   color: var(--color-texto);
 }
 
@@ -110,6 +135,22 @@ body {
 .animar-surgir {
   animation: surgir 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+/* Transicao entre slides do modo estande — o efeito de "rolagem" que
+   o slide-show, ao trocar de secao inteira em vez de rolar a pagina
+   de verdade, tinha perdido. Slide de saida e o de entrada se movem
+   juntos, na mesma direcao: parece um scroll de verdade, nao um corte
+   seco. A duracao (550ms) precisa bater com `DURACAO_TRANSICAO_MS` em
+   `ModoEstande.tsx`. */
+@keyframes slide-sai-para-cima  { to   { transform: translateY(-100%); } }
+@keyframes slide-sai-para-baixo { to   { transform: translateY(100%); } }
+@keyframes slide-entra-de-baixo { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes slide-entra-de-cima  { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+
+.animar-slide-sai-cima   { animation: slide-sai-para-cima  550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.animar-slide-sai-baixo  { animation: slide-sai-para-baixo 550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.animar-slide-entra-baixo { animation: slide-entra-de-baixo 550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.animar-slide-entra-cima  { animation: slide-entra-de-cima  550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
 
 /* Respeita quem pediu menos movimento. Nao e enfeite: o diagrama
    continua legivel parado, entao desligar nao custa informacao. */

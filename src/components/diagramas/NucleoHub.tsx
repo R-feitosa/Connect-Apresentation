@@ -5,7 +5,7 @@ import { COR_HUB } from '@/lib/cores'
 /**
  * O nucleo.
  *
- * Fica visualmente acima de tudo e e o unico elemento dourado da pagina.
+ * Fica visualmente acima de tudo e e o unico elemento em latao da pagina.
  * Os aneis concentricos nao sao enfeite: eles dao ao centro um peso
  * optico maior que o de qualquer modulo, que e literalmente a tese —
  * um no entre os outros nao comunicaria "fonte de verdade".
@@ -13,7 +13,7 @@ import { COR_HUB } from '@/lib/cores'
 export function NucleoHub({ atenuado }: { atenuado: boolean }) {
   return (
     <g style={{ opacity: atenuado ? 0.55 : 1, transition: 'opacity 300ms' }}>
-      {/* Aneis, nao discos. Dourado PREENCHIDO em dois raios virava um
+      {/* Aneis, nao discos. Latao PREENCHIDO em dois raios virava um
           borrao solido que engolia o texto interno — o nucleo precisa de
           peso optico, nao de area pintada. O peso vem de tres aneis
           concentricos com opacidade decrescente. */}

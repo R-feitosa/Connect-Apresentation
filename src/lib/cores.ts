@@ -27,7 +27,7 @@ export const ROTULO_FAMILIA: Record<FamiliaModulo, string> = {
   eventos: 'Eventos e educação',
 }
 
-/** Cor do nucleo. Dourado da marca — e o unico elemento que a usa. */
-export const COR_HUB = '#D8B25F'
-/** Cor do dado em movimento. Reservada a animacao de fluxo. */
-export const COR_FLUXO = '#5FD4E8'
+/** Cor do nucleo. Latao fosco da marca — e o unico elemento que a usa. */
+export const COR_HUB = '#B8935A'
+/** Cor do dado em movimento. Verde-azulado de linha-d'agua, reservada a animacao de fluxo. */
+export const COR_FLUXO = '#5B96A0'
