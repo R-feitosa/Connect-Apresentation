@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Container } from './Container'
+import { LogoRF } from '@/components/ui/LogoRF'
 import { cn } from '@/lib/cn'
 
 const ANCORAS = [
@@ -45,8 +46,8 @@ export function Navegacao() {
       )}
     >
       <Container className="flex h-14 items-center justify-between">
-        <a href="#top" className="flex items-center gap-2.5">
-          <span className="h-2 w-2 animate-pulse rounded-full bg-hub" />
+        <a href="#top" className="flex items-center gap-2">
+          <LogoRF className="h-5 w-5" />
           <span className="font-display text-sm tracking-tight text-texto">
             Atlas
           </span>
