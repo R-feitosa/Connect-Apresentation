@@ -8,9 +8,10 @@
  *
  * Em fundo escuro a grade usava um traco quase-branco em baixa opacidade;
  * sobre o fundo claro atual isso ficaria invisivel (ou estourado se
- * virasse branco puro), entao o traco e um cinza-escuro (borda-forte) e a
- * opacidade geral do SVG cai bastante — um traco escuro "pesa" mais na
- * leitura do que um traco claro pesava sobre o fundo escuro anterior.
+ * virasse branco puro), entao o traco e um cinza-escuro (borda-forte). Um
+ * traco escuro pesa mais na leitura do que um traco claro pesava sobre o
+ * fundo escuro anterior, entao a opacidade cai bem mais (0.12) para a
+ * grade ficar textura de fundo, nao um elemento visivel por si.
  */
 export function GradeFundo() {
   return (
@@ -18,7 +19,7 @@ export function GradeFundo() {
       aria-hidden
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      <svg className="h-full w-full opacity-[0.35]">
+      <svg className="h-full w-full opacity-[0.12]">
         <defs>
           <pattern id="grade" width="48" height="48" patternUnits="userSpaceOnUse">
             <path
