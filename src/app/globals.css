@@ -1,36 +1,37 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Tokens do ecossistema — direcao "Atlas cartografico"
+   Tokens do ecossistema — direcao "Identidade RF Group"
    ------------------------------------------------------------
    Tailwind v4: o tema vive no CSS, nao num tailwind.config.js.
-   Fundo tinta-da-china, nucleo em latao fosco (nao dourado
-   brilhante) e fluxo em verde-azulado de linha-d'agua — a paleta
-   de um mapa antigo, nao de um dashboard de SaaS. Baixo contraste
-   de fundo de proposito: o latao e o verde-azulado so "acendem"
-   porque tudo ao redor e contido.
+   Paleta oficial do manual de marca: fundo claro institucional,
+   nucleo em navy (--color-hub) e fluxo em bordo (--color-fluxo) —
+   as duas cores de identidade do grupo, nao mais uma paleta
+   inventada de mapa antigo. As cores de familia foram escurecidas
+   em relacao a versao anterior (calibradas para fundo escuro) para
+   manterem contraste AA de texto sobre o fundo claro abaixo.
    ============================================================ */
 @theme {
-  --color-fundo: #0B0F14;
-  --color-fundo-alto: #10161D;
-  --color-superficie: #121821;
-  --color-superficie-alta: #1A2330;
-  --color-borda: #1E2733;
-  --color-borda-forte: #2C3A48;
+  --color-fundo: #F7F5F1;
+  --color-fundo-alto: #EFEAE0;
+  --color-superficie: #FFFFFF;
+  --color-superficie-alta: #FBF8F2;
+  --color-borda: #E1DACB;
+  --color-borda-forte: #B9AD8E;
 
-  --color-texto: #EAEFF3;
-  --color-texto-suave: #93A2AC;
-  --color-texto-fraco: #5E6C76;
+  --color-texto: #1C1C1C;
+  --color-texto-suave: #4C4C4C;
+  --color-texto-fraco: #6F6F6F;
 
-  --color-hub: #B8935A;
-  --color-hub-suave: #8C7040;
-  --color-fluxo: #3E6E76;
+  --color-hub: #212965;
+  --color-hub-suave: #3A3F7A;
+  --color-fluxo: #6D0001;
 
-  --color-comercial: #E0A33E;
-  --color-juridico: #7C8CF8;
-  --color-pessoas: #4FC4A0;
-  --color-operacoes: #5AA9E6;
-  --color-eventos: #E07A9A;
+  --color-comercial: #966618;
+  --color-juridico: #475DF5;
+  --color-pessoas: #2A7E64;
+  --color-operacoes: #1B72B4;
+  --color-eventos: #CE3062;
 
   --font-sans: var(--font-sans-local), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-display), var(--font-sans-local), ui-sans-serif, sans-serif;
@@ -39,7 +40,7 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
+  color-scheme: light;
   /* Trava scroll horizontal indevido — util de qualquer forma como
      rede de seguranca contra qualquer elemento que sangre para fora
      da borda no futuro. */
@@ -70,10 +71,10 @@ html {
    caber deixaria a pagina de verdade transparecer por tras. */
 .fundo-atlas {
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"),
-    radial-gradient(circle at top, rgba(184, 147, 90, 0.10), transparent 28%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E"),
+    radial-gradient(circle at top, rgba(33, 41, 101, 0.05), transparent 28%),
     linear-gradient(180deg, var(--color-fundo) 0%, var(--color-fundo-alto) 100%);
-  background-blend-mode: overlay, normal, normal;
+  background-blend-mode: multiply, normal, normal;
   background-repeat: repeat, no-repeat, no-repeat;
 }
 
@@ -85,7 +86,7 @@ body {
 }
 
 ::selection {
-  background: rgba(184, 147, 90, 0.32);
+  background: rgba(33, 41, 101, 0.18);
   color: var(--color-texto);
 }
 

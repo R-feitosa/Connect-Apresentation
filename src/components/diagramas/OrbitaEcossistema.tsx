@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import { MODULOS, ENTIDADE_POR_CODIGO } from '@/content/ecossistema'
 import { distribuirEmElipse } from '@/lib/geometria'
-import { COR_FAMILIA, ROTULO_FAMILIA } from '@/lib/cores'
+import { COR_FAMILIA, COR_HUB, ROTULO_FAMILIA } from '@/lib/cores'
 import { Conexao } from './Conexao'
 import { NucleoHub } from './NucleoHub'
 import { NoModulo } from './NoModulo'
@@ -104,7 +104,7 @@ export function OrbitaEcossistema() {
               </p>
               <div className="mb-6 flex flex-wrap gap-1.5">
                 {moduloFocado.consome.map((codigo) => (
-                  <Etiqueta key={codigo} cor="#D8B25F">
+                  <Etiqueta key={codigo} cor={COR_HUB}>
                     {ENTIDADE_POR_CODIGO.get(codigo)?.nome ?? codigo}
                   </Etiqueta>
                 ))}

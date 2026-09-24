@@ -26,7 +26,7 @@ export function NucleoHub({ atenuado }: { atenuado: boolean }) {
         style={{ animation: 'pulsar-nucleo 4.5s ease-in-out infinite' }}
       />
       <circle r={20} fill="none" stroke={COR_HUB} strokeWidth={0.45} strokeOpacity={0.3} />
-      <circle r={15.5} fill="#080E1A" stroke={COR_HUB} strokeWidth={1} strokeOpacity={0.7} />
+      <circle r={15.5} style={{ fill: 'var(--color-superficie)' }} stroke={COR_HUB} strokeWidth={1} strokeOpacity={0.7} />
       <circle r={15.5} fill={COR_HUB} fillOpacity={0.05} stroke="none" />
 
       <text
@@ -45,7 +45,7 @@ export function NucleoHub({ atenuado }: { atenuado: boolean }) {
       <text
         textAnchor="middle"
         y={33}
-        fill="#7E8EA8"
+        style={{ fill: 'var(--color-texto-fraco)' }}
         fontSize={3.6}
         letterSpacing="0.16em"
       >

@@ -58,12 +58,11 @@ export function NoModulo({
       {ativo && <circle r={12} fill={cor} opacity={0.14} pointerEvents="none" />}
       <circle
         r={8}
-        fill="#0A1120"
         stroke={cor}
         strokeWidth={ativo ? 1.4 : 0.8}
         strokeOpacity={ativo ? 1 : 0.6}
         pointerEvents="none"
-        style={{ transition: 'stroke-width 250ms, stroke-opacity 250ms' }}
+        style={{ fill: 'var(--color-superficie)', transition: 'stroke-width 250ms, stroke-opacity 250ms' }}
       />
       <text
         textAnchor="middle"
@@ -80,10 +79,12 @@ export function NoModulo({
         x={deslocamentoRotulo}
         y={deslocamentoY}
         textAnchor={ancora}
-        fill={ativo ? '#E8EEF9' : '#8195B2'}
         fontSize={4}
         pointerEvents="none"
-        style={{ transition: 'fill 250ms' }}
+        style={{
+          fill: ativo ? 'var(--color-texto)' : 'var(--color-texto-suave)',
+          transition: 'fill 250ms',
+        }}
       >
         {modulo.nome}
       </text>
