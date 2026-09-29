@@ -28,7 +28,7 @@ export function AntesDepois() {
             </span>
           </div>
           <div className="px-6 py-4">
-            <span className="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-hub">
+            <span className="font-mono text-[0.7rem] font-bold uppercase tracking-[0.15em] text-fluxo">
               Depois — Atlas como base compartilhada
             </span>
           </div>
@@ -52,13 +52,13 @@ export function AntesDepois() {
                   {par.antes}
                 </span>
               </div>
-              <div className="flex gap-3 bg-hub/[0.03] px-6 py-5">
-                <span aria-hidden className="mt-1.5 text-hub">
+              <div className="flex gap-3 bg-fluxo/[0.04] px-6 py-5">
+                <span aria-hidden className="mt-1.5 text-fluxo">
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M2.5 6.5l2.5 2.5 4.5-5.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M2.5 6.5l2.5 2.5 4.5-5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>
-                <span className="text-sm leading-relaxed text-texto">
+                <span className="text-sm font-medium leading-relaxed text-texto">
                   {par.depois}
                 </span>
               </div>
