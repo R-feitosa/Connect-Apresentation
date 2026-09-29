@@ -2,8 +2,7 @@
 
 import type { Modulo } from '@/types/ecossistema'
 import type { PosicaoNo } from '@/lib/geometria'
-import { COR_FAMILIA, COR_MODULO } from '@/lib/cores'
-import { MarcaModulo } from './MarcaModulo'
+import { COR_FAMILIA } from '@/lib/cores'
 
 /**
  * Um modulo no anel.
@@ -33,7 +32,6 @@ export function NoModulo({
   aoSair: () => void
 }) {
   const cor = COR_FAMILIA[modulo.familia]
-  const corMarca = COR_MODULO[modulo.codigo] ?? cor
   const ladoDireito = posicao.x > 1
   const noEixo = Math.abs(posicao.x) <= 1
   const deslocamentoRotulo = noEixo ? 0 : ladoDireito ? 12 : -12
@@ -66,9 +64,17 @@ export function NoModulo({
         pointerEvents="none"
         style={{ fill: 'var(--color-superficie)', transition: 'stroke-width 250ms, stroke-opacity 250ms' }}
       />
-      <g pointerEvents="none">
-        <MarcaModulo cor={corMarca} />
-      </g>
+      <text
+        textAnchor="middle"
+        y={2}
+        fill={cor}
+        fontSize={4.2}
+        fontWeight={600}
+        letterSpacing="0.04em"
+        pointerEvents="none"
+      >
+        {modulo.sigla}
+      </text>
       <text
         x={deslocamentoRotulo}
         y={deslocamentoY}
