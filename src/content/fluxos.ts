@@ -28,7 +28,7 @@ export const FLUXOS: readonly FluxoCadastro[] = [
       { titulo: 'Ganha papel', detalhe: 'Colaborador, aberto pelo contrato no RH.' },
       { titulo: 'Aparece nos sistemas', detalhe: 'Folha, ponto e acessos.' },
     ],
-    destinos: ['rh', 'rf_ops'],
+    destinos: ['rh', 'ponto', 'rf_ops'],
   },
   {
     codigo: 'empresa',

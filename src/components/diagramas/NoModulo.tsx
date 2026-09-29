@@ -3,6 +3,8 @@
 import type { Modulo } from '@/types/ecossistema'
 import type { PosicaoNo } from '@/lib/geometria'
 import { COR_FAMILIA } from '@/lib/cores'
+import { VISUAL_SISTEMA } from '@/content/sistemas'
+import { MARCAS_EMPRESAS } from '@/content/marcas-empresas'
 
 /**
  * Um modulo no anel.
@@ -34,9 +36,9 @@ export function NoModulo({
   const cor = COR_FAMILIA[modulo.familia]
   const ladoDireito = posicao.x > 1
   const noEixo = Math.abs(posicao.x) <= 1
-  const deslocamentoRotulo = noEixo ? 0 : ladoDireito ? 12 : -12
+  const deslocamentoRotulo = noEixo ? 0 : ladoDireito ? 13.5 : -13.5
   const ancora = noEixo ? 'middle' : ladoDireito ? 'start' : 'end'
-  const deslocamentoY = noEixo ? (posicao.y < 0 ? -13 : 15) : 1.2
+  const deslocamentoY = noEixo ? (posicao.y < 0 ? -14.5 : 16.5) : 1.2
 
   return (
     <g
@@ -52,29 +54,19 @@ export function NoModulo({
       style={{ opacity: atenuado ? 0.25 : 1, transition: 'opacity 300ms' }}
     >
       {/* Area de acerto invisivel e generosa. Sem ela o alvo e o circulo
-          de 8px: preciso demais no mouse e quase impossivel no toque.
+          de 9.5px: preciso demais no mouse e quase impossivel no toque.
           `fill="transparent"` participa do hit-test; `fill="none"` nao. */}
       <circle r={14} fill="transparent" />
-      {ativo && <circle r={12} fill={cor} opacity={0.14} pointerEvents="none" />}
+      {ativo && <circle r={13.5} fill={cor} opacity={0.14} pointerEvents="none" />}
       <circle
-        r={8}
+        r={9.5}
         stroke={cor}
         strokeWidth={ativo ? 1.4 : 0.8}
         strokeOpacity={ativo ? 1 : 0.6}
         pointerEvents="none"
         style={{ fill: 'var(--color-superficie)', transition: 'stroke-width 250ms, stroke-opacity 250ms' }}
       />
-      <text
-        textAnchor="middle"
-        y={2}
-        fill={cor}
-        fontSize={4.2}
-        fontWeight={600}
-        letterSpacing="0.04em"
-        pointerEvents="none"
-      >
-        {modulo.sigla}
-      </text>
+      <MarcaNo codigo={modulo.codigo} sigla={modulo.sigla} cor={cor} />
       <text
         x={deslocamentoRotulo}
         y={deslocamentoY}
@@ -89,5 +81,34 @@ export function NoModulo({
         {modulo.nome}
       </text>
     </g>
+  )
+}
+
+/**
+ * O simbolo do sistema dentro do no: o anel com o icone (apps), o icone
+ * do app (Ponto) ou a medalha da empresa. A sigla so aparece se faltar
+ * identidade visual para o codigo.
+ */
+function MarcaNo({ codigo, sigla, cor }: { codigo: string; sigla: string; cor: string }) {
+  const v = VISUAL_SISTEMA[codigo]
+  if (v?.marca) {
+    const l = codigo === 'ponto' ? 14.6 : 13.2
+    return <image href={v.marca.src} x={-l / 2} y={-l / 2 + (codigo === 'ponto' ? 0 : 1.1)} width={l} height={l} pointerEvents="none" />
+  }
+  if (v?.empresa) {
+    const m = MARCAS_EMPRESAS[v.empresa]
+    return (
+      <g transform="scale(8.4)" pointerEvents="none">
+        <circle r="1" fill={m.disco} />
+        {m.camadas.map((c, i) => (
+          <path key={i} d={c.d} fill={c.cor} />
+        ))}
+      </g>
+    )
+  }
+  return (
+    <text textAnchor="middle" y={2} fill={cor} fontSize={4.2} fontWeight={600} letterSpacing="0.04em" pointerEvents="none">
+      {sigla}
+    </text>
   )
 }

@@ -5,8 +5,7 @@ import type { FamiliaModulo } from '@/types/ecossistema'
  *
  * Familia, e nao um tom por modulo: onze cores distintas viram arco-iris
  * e param de significar. Agrupar por area faz a cor CARREGAR informacao —
- * bate o olho e ve que Juris, Consult, Tributario e Legal Ops sao o mesmo
- * bloco.
+ * bate o olho e ve que Consult, Tributario e Legal Ops sao o mesmo bloco.
  *
  * Os valores vivem aqui e nao no Tailwind porque tambem alimentam
  * atributos de SVG (stroke, fill), que nao aceitam classe utilitaria.

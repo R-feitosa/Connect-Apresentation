@@ -3,58 +3,49 @@ import type { EntidadeMestre, Modulo } from '@/types/ecossistema'
 /**
  * As entidades mestres do HUB.
  *
- * Cada uma nomeia a tabela real do banco integrado. E de proposito: a
- * pagina afirma "isto nao se duplica", e uma afirmacao dessas fica mais
- * forte quando aponta para onde o dado mora.
+ * O que mora uma vez so no banco integrado e e lido por todos os
+ * sistemas. Sem nome de tabela: a pagina e para o publico de um evento.
  */
 export const ENTIDADES_MESTRES: readonly EntidadeMestre[] = [
   {
     codigo: 'pessoas',
     nome: 'Pessoas e empresas',
     descricao: 'Identidade única de cada pessoa física ou jurídica.',
-    tabela: 'hub.pessoas',
   },
   {
     codigo: 'documentos',
     nome: 'Documentos',
     descricao: 'CPF, CNPJ, RG e afins, normalizados — a chave da deduplicação.',
-    tabela: 'hub.pessoa_documentos',
   },
   {
     codigo: 'papeis',
     nome: 'Papéis',
     descricao: 'Cliente, lead, fornecedor, parceiro, colaborador — com vigência.',
-    tabela: 'hub.pessoa_papeis',
   },
   {
     codigo: 'canais',
     nome: 'Canais de contato',
     descricao: 'E-mail, telefone e WhatsApp, com o principal marcado.',
-    tabela: 'hub.pessoa_canais',
   },
   {
     codigo: 'enderecos',
     nome: 'Endereços',
     descricao: 'Principal, cobrança, entrega e fiscal, no mesmo formato.',
-    tabela: 'hub.pessoa_enderecos',
   },
   {
     codigo: 'grupos',
     nome: 'Grupos econômicos',
     descricao: 'Holdings e carteiras que amarram várias empresas.',
-    tabela: 'hub.grupos',
   },
   {
     codigo: 'perfil',
     nome: 'Perfil empresarial',
     descricao: 'Porte, regime, CNAE, segmento e faturamento das PJ.',
-    tabela: 'hub.pessoa_perfil_empresarial',
   },
   {
     codigo: 'acessos',
     nome: 'Acessos e cargos',
     descricao: 'Quem entra em qual sistema, com qual cargo.',
-    tabela: 'acessos.usuario_acessos',
   },
 ]
 
@@ -147,14 +138,13 @@ export const MODULOS: readonly Modulo[] = [
     usuarios: 3,
   },
   {
-    codigo: 'juris',
-    nome: 'Atlas Juris',
-    sigla: 'AJU',
-    familia: 'juridico',
-    resumo: 'Processos judiciais, petições e audiências.',
-    consome: ['pessoas', 'documentos', 'papeis'],
-    proprio: ['Processos e movimentações', 'Petições', 'Audiências'],
-    usuarios: 3,
+    codigo: 'ponto',
+    nome: 'Atlas Ponto',
+    sigla: 'PTO',
+    familia: 'pessoas',
+    resumo: 'App PWA de ponto, integrado ao Atlas RH.',
+    consome: ['pessoas', 'acessos'],
+    proprio: ['Marcações de ponto', 'Justificativas e ajustes'],
   },
   {
     codigo: 'academy',

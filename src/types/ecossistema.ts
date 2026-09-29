@@ -35,8 +35,6 @@ export interface EntidadeMestre {
   readonly codigo: string
   readonly nome: string
   readonly descricao: string
-  /** Tabela real no banco integrado — ancora a promessa em algo concreto. */
-  readonly tabela: string
 }
 
 /** Um passo do fluxo de cadastro. */

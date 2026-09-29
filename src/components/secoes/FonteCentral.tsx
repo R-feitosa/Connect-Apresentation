@@ -4,8 +4,8 @@ import { Revelar } from '@/components/anim/Revelar'
 import { ENTIDADES_MESTRES } from '@/content/ecossistema'
 
 /**
- * As entidades que nao se duplicam. Cada celula mostra a TABELA real —
- * e o detalhe que separa "queremos ser integrados" de "somos integrados".
+ * As entidades que nao se duplicam: nome e uma linha do que guardam.
+ * Sem nome de tabela — o publico e de evento, nao de banco de dados.
  */
 export function FonteCentral() {
   return (
@@ -23,7 +23,7 @@ export function FonteCentral() {
               {String(i + 1).padStart(2, '0')}
             </span>
             <h3 className="font-display text-xl font-bold tracking-tight">{e.nome}</h3>
-            <p className="mt-2 font-mono text-xs text-texto-fraco group-hover:text-lavanda">{e.tabela}</p>
+            <p className="mt-2 text-sm leading-snug text-texto-suave group-hover:text-lavanda">{e.descricao}</p>
           </Revelar>
         ))}
       </div>

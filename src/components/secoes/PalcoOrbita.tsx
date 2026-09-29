@@ -7,16 +7,15 @@ import { LogoSistema } from '@/components/ui/LogoSistema'
 // As logos mais largas (Tributario, Consult) ficam na orbita externa: nas
 // laterais, onde as duas orbitas ficam lado a lado, a soma das meias
 // larguras cabe no vao entre os raios e as pilulas nao se sobrepoem.
-const INTERNOS = ['crm', 'rf_ops', 'rh', 'legal_ops', 'juris']
+const INTERNOS = ['crm', 'rf_ops', 'rh', 'legal_ops', 'cash']
 const doCodigo = (c: string) => MODULOS.find((m) => m.codigo === c)!
 const EXTERNOS = MODULOS.filter((m) => !INTERNOS.includes(m.codigo))
 
 /**
- * O palco do Hero: o HUB num medalhao branco no centro e as logos de
- * todos os sistemas girando em duas orbitas, em sentidos opostos.
- *
- * Substitui a cena 3D do site institucional por CSS puro (so transform,
- * composto na GPU) — o Atlas roda o dia todo numa TV de estande. O raio
+ * Versao em CSS do palco do Hero (fallback do Palco3D quando nao ha
+ * WebGL): o HUB num medalhao branco no centro e as logos de todos os
+ * sistemas girando em duas orbitas, em sentidos opostos. So transform,
+ * composto na GPU. O raio
  * vem em `cqw` (largura do proprio palco), entao as orbitas acompanham o
  * tamanho em qualquer tela e dentro dos slides escalados do modo estande.
  */

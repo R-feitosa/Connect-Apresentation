@@ -1,7 +1,7 @@
 import { Container } from '@/components/layout/Container'
 import { Marquee } from '@/components/layout/Marquee'
 import { RedeParticulas } from '@/components/anim/RedeParticulas'
-import { PalcoOrbita } from './PalcoOrbita'
+import { Palco3D } from './Palco3D'
 import { FRASES_MARQUEE_HERO } from '@/content/marquee'
 
 // Padrao da marca: palavra fina + palavra em negrito.
@@ -56,7 +56,7 @@ export function Hero() {
         </div>
 
         <div className="surge" style={{ transitionDelay: '0.8s' }}>
-          <PalcoOrbita />
+          <Palco3D />
         </div>
       </Container>
 

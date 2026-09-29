@@ -31,10 +31,15 @@ export function Sistemas() {
               <LogoSistema codigo={m.codigo} nome={m.nome} className="relative h-14 max-w-full" />
             </div>
             <p className="text-[0.95rem] leading-snug text-texto-suave">{m.resumo}</p>
-            {m.usuarios !== undefined && (
+            {m.usuarios !== undefined ? (
               <p className="mt-auto flex items-baseline gap-2 border-t border-borda pt-4">
                 <Contador valor={m.usuarios} className="font-display text-2xl font-bold text-hub" />
                 <span className="text-[0.7rem] uppercase tracking-[0.16em] text-texto-fraco">com acesso</span>
+              </p>
+            ) : (
+              <p className="mt-auto flex items-baseline gap-2 border-t border-borda pt-4">
+                <span className="font-display text-2xl font-bold text-hub">PWA</span>
+                <span className="text-[0.7rem] uppercase tracking-[0.16em] text-texto-fraco">no celular</span>
               </p>
             )}
           </Revelar>
