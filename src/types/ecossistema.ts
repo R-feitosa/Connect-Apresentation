@@ -69,8 +69,9 @@ export type IconeBeneficio =
   | 'governanca'
   | 'escala'
 
-/** Um par de linhas da comparacao antes x depois. */
+/** Uma dor do "antes", com a resposta do Atlas. */
 export interface ParComparativo {
+  readonly titulo: string
   readonly antes: string
   readonly depois: string
 }

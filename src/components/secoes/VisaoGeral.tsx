@@ -1,17 +1,20 @@
 import { Secao } from '@/components/layout/Secao'
 import { TituloSecao } from '@/components/layout/TituloSecao'
+import { Revelar } from '@/components/anim/Revelar'
 import { OrbitaEcossistema } from '@/components/diagramas/OrbitaEcossistema'
 
 export function VisaoGeral() {
   return (
-    <Secao id="ecossistema" comLinhaSuperior={false}>
+    <Secao id="ecossistema" tom="papel2">
       <TituloSecao
-        indice="01"
-        etiqueta="Visão geral"
-        titulo="Atlas no centro, aplicações conectadas ao mesmo registro"
-        descricao="O ecossistema deixa de ser um conjunto de ferramentas paralelas para virar uma plataforma única: cada módulo usa o mesmo universo de dados e acrescenta apenas a sua própria regra de negócio."
+        sobretitulo="A virada"
+        titulo="O Atlas no centro,"
+        destaque="todos lendo a mesma base."
+        descricao="Cada sistema usa o mesmo cadastro e acrescenta só a própria regra."
       />
-      <OrbitaEcossistema />
+      <Revelar de="escala">
+        <OrbitaEcossistema />
+      </Revelar>
     </Secao>
   )
 }

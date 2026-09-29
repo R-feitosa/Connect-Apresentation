@@ -3,38 +3,43 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { Hero } from '@/components/secoes/Hero'
+import { Problema } from '@/components/secoes/Problema'
 import { VisaoGeral } from '@/components/secoes/VisaoGeral'
+import { Sistemas } from '@/components/secoes/Sistemas'
 import { FluxoDeCadastro } from '@/components/secoes/FluxoDeCadastro'
 import { FonteCentral } from '@/components/secoes/FonteCentral'
-import { AntesDepois } from '@/components/secoes/AntesDepois'
+import { Numeros } from '@/components/secoes/Numeros'
 import { Beneficios } from '@/components/secoes/Beneficios'
 import { NovosMvps } from '@/components/secoes/NovosMvps'
 import { Marquee } from '@/components/layout/Marquee'
 import { FRASES_MARQUEE_ENCERRAMENTO } from '@/content/marquee'
 
 /**
- * Ultimo slide: a secao de escalabilidade MAIS a faixa de
- * encerramento que, na pagina normal, fecha o scroll antes do
- * rodape. Sem isto ela nao teria slide nenhum no loop — a lista de
- * slides mapeia 1:1 com secoes, e a faixa nao e uma secao.
+ * Ultimo slide: a secao de escalabilidade MAIS a faixa de encerramento,
+ * que na pagina normal fecha o scroll antes do rodape.
  */
 function SlideFinal() {
   return (
     <>
       <NovosMvps />
-      <Marquee itens={FRASES_MARQUEE_ENCERRAMENTO} invertido className="my-4" />
+      <Marquee itens={FRASES_MARQUEE_ENCERRAMENTO} invertido />
     </>
   )
 }
 
+/** `fundo` pinta o slide inteiro, inclusive a sobra das bordas quando o
+ * conteudo encolhe para caber: secoes escuras pedem navy em volta, senao
+ * sobraria uma moldura de papel claro ao redor delas. */
 const SLIDES = [
-  Hero,
-  VisaoGeral,
-  FluxoDeCadastro,
-  FonteCentral,
-  AntesDepois,
-  Beneficios,
-  SlideFinal,
+  { Componente: Hero, fundo: 'bg-navy-fundo' },
+  { Componente: Problema, fundo: 'bg-fundo' },
+  { Componente: VisaoGeral, fundo: 'bg-fundo-alto' },
+  { Componente: Sistemas, fundo: 'bg-fundo' },
+  { Componente: FluxoDeCadastro, fundo: 'bg-fundo-alto' },
+  { Componente: FonteCentral, fundo: 'bg-fundo' },
+  { Componente: Numeros, fundo: 'bg-navy-fundo' },
+  { Componente: Beneficios, fundo: 'bg-fundo-alto' },
+  { Componente: SlideFinal, fundo: 'bg-fundo' },
 ]
 
 const TEMPO_POR_SLIDE_MS = 9000
@@ -111,6 +116,9 @@ export function ModoEstande() {
     // ou o Tab do teclado ainda alcancaria esse conteudo duplicado e
     // escondido. `inert` tira tudo isso da arvore de acessibilidade e
     // do foco enquanto o modo estande estiver ativo.
+    // `estande` avisa quem anima (ex.: a rede de particulas) que a pagina
+    // de verdade esta coberta e nao precisa gastar quadro.
+    document.body.classList.toggle('estande', ativo)
     const main = document.getElementById('top')
     const rodape = document.querySelector('footer')
     for (const el of [main, rodape]) {
@@ -154,23 +162,25 @@ export function ModoEstande() {
     return () => clearTimeout(id)
   }, [saindo])
 
-  const SlideAtual = SLIDES[estado.indice]
+  const { Componente: SlideAtual, fundo: fundoAtual } = SLIDES[estado.indice]
 
   return (
     <>
       {ativo && (
         <div
-          className="fundo-atlas fixed inset-0 z-40 overflow-hidden"
+          className="fixed inset-0 z-[60] overflow-hidden bg-fundo"
           aria-live="polite"
+          data-estande
         >
           {saindo &&
             (() => {
-              const SlideQueSai = SLIDES[saindo.indice]
+              const { Componente: SlideQueSai, fundo: fundoSaida } = SLIDES[saindo.indice]
               return (
                 <div
                   key={`sai-${saindo.indice}`}
                   className={cn(
                     'absolute inset-0',
+                    fundoSaida,
                     saindo.sentido === 1
                       ? 'animar-slide-sai-cima'
                       : 'animar-slide-sai-baixo',
@@ -186,6 +196,7 @@ export function ModoEstande() {
             key={`entra-${estado.indice}`}
             className={cn(
               'absolute inset-0',
+              fundoAtual,
               estado.sentido === 1 ? 'animar-slide-entra-baixo' : 'animar-slide-entra-cima',
             )}
           >
@@ -198,7 +209,7 @@ export function ModoEstande() {
       <button
         type="button"
         onClick={() => setAtivo((v) => !v)}
-        className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full border border-borda-forte bg-fundo-alto px-4 py-2.5 font-mono text-[0.7rem] uppercase tracking-[0.15em] text-texto-suave shadow-lg transition-colors hover:border-hub/50 hover:text-hub"
+        className="fixed bottom-5 right-5 z-[70] flex items-center gap-2 rounded-full border border-borda-forte bg-fundo-alto px-4 py-2.5 font-mono text-[0.7rem] uppercase tracking-[0.15em] text-texto-suave shadow-lg transition-colors hover:border-hub/50 hover:text-hub"
         aria-pressed={ativo}
       >
         <span

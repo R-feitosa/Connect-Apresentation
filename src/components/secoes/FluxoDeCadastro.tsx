@@ -1,17 +1,15 @@
 import { Secao } from '@/components/layout/Secao'
 import { TituloSecao } from '@/components/layout/TituloSecao'
+import { Revelar } from '@/components/anim/Revelar'
 import { FluxoCadastro } from '@/components/diagramas/FluxoCadastro'
 
 export function FluxoDeCadastro() {
   return (
-    <Secao id="fluxo">
-      <TituloSecao
-        indice="02"
-        etiqueta="Fluxo de um cadastro"
-        titulo="Onde o dado nasce, e para onde ele vai"
-        descricao="Cliente, colaborador, empresa ou participante entram pela mesma porta. O que muda depois é o papel — e é o papel que decide quais módulos passam a enxergar aquele registro."
-      />
-      <FluxoCadastro />
+    <Secao id="fluxo" tom="papel2">
+      <TituloSecao sobretitulo="Na prática" titulo="Quem chega" destaque="nasce uma vez só." />
+      <Revelar>
+        <FluxoCadastro />
+      </Revelar>
     </Secao>
   )
 }

@@ -1,43 +1,23 @@
 import { Secao } from '@/components/layout/Secao'
 import { TituloSecao } from '@/components/layout/TituloSecao'
-import { Cartao } from '@/components/ui/Cartao'
+import { Revelar } from '@/components/anim/Revelar'
 import { IconeBeneficio } from '@/components/ui/IconeBeneficio'
 import { BENEFICIOS } from '@/content/beneficios'
 
-/** Alterna a cor do icone por posicao — o mesmo tom em todo cartao
- * deixava a grade monotona; revezando entre as 3 cores da marca cada
- * cartao ganha identidade propria sem inventar uma cor nova. */
-const CORES_ICONE = [
-  'border-hub/30 bg-hub/[0.08] text-hub',
-  'border-fluxo/30 bg-fluxo/[0.08] text-fluxo',
-  'border-comercial/30 bg-comercial/[0.08] text-comercial',
-] as const
-
 export function Beneficios() {
   return (
-    <Secao id="beneficios">
-      <TituloSecao
-        indice="05"
-        etiqueta="Benefícios"
-        titulo="O que a arquitetura integrada entrega"
-        descricao="Não são promessas de projeto: são consequências diretas de haver um único lugar onde o dado mestre nasce."
-      />
+    <Secao id="beneficios" tom="papel2">
+      <TituloSecao sobretitulo="Benefícios" titulo="O que muda" destaque="no dia a dia." />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {BENEFICIOS.map((beneficio, i) => (
-          <Cartao key={beneficio.titulo} comBrilho>
-            <span
-              className={`mb-5 inline-flex h-10 w-10 items-center justify-center rounded-lg border ${CORES_ICONE[i % CORES_ICONE.length]}`}
-            >
-              <IconeBeneficio nome={beneficio.icone} />
+      <div className="grid border-l border-t border-borda sm:grid-cols-2 lg:grid-cols-3">
+        {BENEFICIOS.map((b, i) => (
+          <Revelar key={b.titulo} atraso={(i % 3) * 0.1} className="group border-b border-r border-borda bg-fundo-alto p-8 hover:bg-hub hover:text-white">
+            <span className="mb-6 inline-flex h-11 w-11 items-center justify-center border border-fluxo/30 text-fluxo transition-colors duration-500 group-hover:border-white/30 group-hover:text-white">
+              <IconeBeneficio nome={b.icone} />
             </span>
-            <h3 className="mb-2 text-base font-semibold text-texto">
-              {beneficio.titulo}
-            </h3>
-            <p className="text-sm leading-relaxed text-texto-suave">
-              {beneficio.descricao}
-            </p>
-          </Cartao>
+            <h3 className="mb-2 font-display text-xl font-bold tracking-tight">{b.titulo}</h3>
+            <p className="text-sm leading-relaxed text-texto-suave group-hover:text-lavanda">{b.descricao}</p>
+          </Revelar>
         ))}
       </div>
     </Secao>

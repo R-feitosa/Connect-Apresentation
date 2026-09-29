@@ -1,20 +1,16 @@
+import { MODULOS } from './ecossistema'
+
 /**
- * Frases das duas faixas corridas da pagina.
- *
- * Ficam aqui (e nao soltas dentro de `Hero.tsx`/`page.tsx`) porque o
- * modo estande (`ModoEstande.tsx`) precisa da mesma frase de
- * fechamento pra remontar o ultimo slide — sem um lugar comum, as duas
- * listas iam divergir na primeira mudanca de texto.
+ * Frases das duas faixas corridas. Num lugar so porque o modo estande
+ * (`ModoEstande.tsx`) remonta a faixa de fechamento no ultimo slide.
  */
-export const FRASES_MARQUEE_HERO = [
-  'Sistemas isolados',
-  'Dados fragmentados',
-  'Um ecossistema',
-  'Uma única fonte de verdade',
-]
+
+/** A faixa do Hero lista os proprios sistemas — o que o Atlas conecta. */
+export const FRASES_MARQUEE_HERO = ['Atlas HUB', ...MODULOS.map((m) => m.nome)]
 
 export const FRASES_MARQUEE_ENCERRAMENTO = [
   'Um ecossistema',
   'Uma base',
+  'Uma fonte de verdade',
   'Novas possibilidades',
 ]

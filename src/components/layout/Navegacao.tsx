@@ -2,35 +2,29 @@
 
 import { useEffect, useState } from 'react'
 import { Container } from './Container'
-import { LogoRF } from '@/components/ui/LogoRF'
+import { LogoGrupo } from '@/components/ui/LogoGrupo'
 import { cn } from '@/lib/cn'
 
 const ANCORAS = [
+  { href: '#problema', rotulo: 'Antes' },
   { href: '#ecossistema', rotulo: 'Atlas' },
+  { href: '#sistemas', rotulo: 'Sistemas' },
   { href: '#fluxo', rotulo: 'Fluxo' },
-  { href: '#fonte', rotulo: 'Fonte' },
-  { href: '#antes-depois', rotulo: 'Problema' },
-  { href: '#beneficios', rotulo: 'Benefícios' },
-  { href: '#mvps', rotulo: 'Escala' },
+  { href: '#numeros', rotulo: 'Números' },
+  { href: '#escala', rotulo: 'Escala' },
 ]
 
 /**
- * Barra fixa que so ganha fundo depois do primeiro rolar.
- *
- * Sobre o hero ela fica transparente para nao cortar o titulo; a partir
- * dali recebe fundo e borda, senao o texto das secoes passa por baixo e
- * fica ilegivel.
- *
- * Fundo SOLIDO, sem `backdrop-blur`: um blur de fundo precisa reamostrar
- * tudo que esta atras a cada frame enquanto a pagina rola, o que pesa
- * muito em GPU integrada. Uma cor opaca da a mesma legibilidade sem
- * esse custo continuo.
+ * Cabecalho claro e solido, como no site institucional: a logo oficial
+ * (navy e bordo) precisa de fundo claro, mesmo por cima do Hero escuro.
+ * Encolhe um pouco depois do primeiro rolar. Fundo opaco, sem
+ * `backdrop-blur` — o blur reamostra a pagina a cada quadro de rolagem.
  */
 export function Navegacao() {
   const [rolou, setRolou] = useState(false)
 
   useEffect(() => {
-    const aoRolar = () => setRolou(window.scrollY > 24)
+    const aoRolar = () => setRolou(window.scrollY > 60)
     aoRolar()
     window.addEventListener('scroll', aoRolar, { passive: true })
     return () => window.removeEventListener('scroll', aoRolar)
@@ -39,27 +33,22 @@ export function Navegacao() {
   return (
     <nav
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
-        rolou
-          ? 'border-b border-borda bg-fundo-alto'
-          : 'border-b border-transparent',
+        'fixed inset-x-0 top-0 z-50 border-b border-borda bg-[#f7f6f4] transition-[padding,box-shadow] duration-500',
+        rolou ? 'py-2 shadow-[0_10px_30px_-18px_rgba(10,14,43,0.35)]' : 'py-3.5',
       )}
     >
-      <Container className="flex h-14 items-center justify-between">
-        <a href="#top" className="flex items-center gap-2">
-          <LogoRF className="h-5 w-5" />
-          <span className="font-display text-sm tracking-tight text-texto">
-            Atlas
-          </span>
+      <Container className="flex items-center justify-between">
+        <a href="#top" aria-label="RFEITOSA Group — início" className="block">
+          <LogoGrupo className={cn('w-auto transition-[height] duration-500', rolou ? 'h-9' : 'h-11')} />
         </a>
-        <ul className="hidden gap-7 md:flex">
-          {ANCORAS.map((ancora) => (
-            <li key={ancora.href}>
+        <ul className="hidden gap-8 md:flex">
+          {ANCORAS.map((a) => (
+            <li key={a.href}>
               <a
-                href={ancora.href}
-                className="text-sm text-texto-suave transition-colors hover:text-texto"
+                href={a.href}
+                className="relative py-1 text-[0.78rem] font-medium uppercase tracking-[0.14em] text-texto after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-fluxo after:transition-transform after:duration-500 hover:after:origin-left hover:after:scale-x-100"
               >
-                {ancora.rotulo}
+                {a.rotulo}
               </a>
             </li>
           ))}
