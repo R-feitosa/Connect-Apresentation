@@ -18,21 +18,24 @@ export function Hero() {
       />
 
       <Container className="relative flex flex-1 flex-col justify-center">
-        <div className="animar-surgir mb-8 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.2em] text-texto-suave">
-          <span className="rounded-full border border-hub/30 bg-hub/[0.06] px-3 py-1 text-hub">
+        <div className="animar-surgir mb-8 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.2em]">
+          <span className="rounded-full border-2 border-hub bg-hub/[0.06] px-3 py-1 font-bold text-hub">
             R. Feitosa Group
           </span>
-          <span className="font-mono text-texto-fraco">Ecossistema Atlas</span>
+          <span className="rounded bg-hub px-2.5 py-1 font-mono font-bold text-acento">
+            Ecossistema Atlas
+          </span>
         </div>
 
-        <h1 className="animar-surgir max-w-5xl text-balance font-display text-[clamp(2.6rem,7vw,6.5rem)] font-medium leading-[0.98] tracking-tight">
+        <h1 className="animar-surgir max-w-5xl text-balance font-display text-[clamp(2.6rem,7vw,6.5rem)] font-bold leading-[0.98] tracking-tight">
           Vários sistemas.
           <br />
-          <span className="text-texto-fraco line-through decoration-2 decoration-texto-fraco/50">
+          <span className="text-texto-fraco line-through decoration-4 decoration-fluxo/40">
             Nenhum falava com o outro.
           </span>
           <br />
-          <span className="text-hub">Agora, um só Atlas.</span>
+          <span className="text-hub">Agora, um só </span>
+          <span className="text-fluxo">Atlas.</span>
         </h1>
 
         <p
@@ -50,9 +53,9 @@ export function Hero() {
           className="animar-surgir mt-14 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3"
           style={{ animationDelay: '220ms' }}
         >
-          <Metrica valor={String(MODULOS.length)} rotulo="sistemas conectados" />
-          <Metrica valor={String(ENTIDADES_MESTRES.length)} rotulo="entidades mestras" />
-          <Metrica valor="1" rotulo="fonte de verdade" destacado />
+          <Metrica valor={String(MODULOS.length)} rotulo="sistemas conectados" cor="hub" />
+          <Metrica valor={String(ENTIDADES_MESTRES.length)} rotulo="entidades mestras" cor="fluxo" />
+          <Metrica valor="1" rotulo="fonte de verdade" cor="comercial" />
         </dl>
       </Container>
 
@@ -61,26 +64,28 @@ export function Hero() {
   )
 }
 
+const COR_METRICA = {
+  hub: 'text-hub',
+  fluxo: 'text-fluxo',
+  comercial: 'text-comercial',
+} as const
+
 function Metrica({
   valor,
   rotulo,
-  destacado = false,
+  cor,
 }: {
   valor: string
   rotulo: string
-  destacado?: boolean
+  cor: keyof typeof COR_METRICA
 }) {
   return (
     <div>
       <dt className="sr-only">{rotulo}</dt>
-      <dd
-        className={`font-display text-5xl font-medium tracking-tight ${
-          destacado ? 'text-hub' : 'text-texto'
-        }`}
-      >
+      <dd className={`font-display text-5xl font-bold tracking-tight ${COR_METRICA[cor]}`}>
         {valor}
       </dd>
-      <p className="mt-2 text-sm text-texto-fraco">{rotulo}</p>
+      <p className="mt-2 text-sm font-medium text-texto-fraco">{rotulo}</p>
     </div>
   )
 }

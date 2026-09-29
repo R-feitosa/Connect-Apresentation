@@ -4,6 +4,11 @@ import { Cartao } from '@/components/ui/Cartao'
 import { Etiqueta } from '@/components/ui/Etiqueta'
 import { ENTIDADES_MESTRES } from '@/content/ecossistema'
 
+/** Mesma logica de revezamento de cor do Beneficios — evita que os 8
+ * cartoes (mesmo layout, mesmo tipo de conteudo) leiam como uma unica
+ * mancha cinza. */
+const CORES_DOT = ['bg-hub', 'bg-fluxo', 'bg-comercial', 'bg-operacoes'] as const
+
 /**
  * As entidades que nao se duplicam.
  *
@@ -21,13 +26,16 @@ export function FonteCentral() {
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {ENTIDADES_MESTRES.map((entidade) => (
+        {ENTIDADES_MESTRES.map((entidade, i) => (
           <Cartao key={entidade.codigo} comBrilho className="flex flex-col">
             <div className="mb-4 flex items-center justify-between gap-3">
-              <h3 className="text-base font-semibold text-texto">
+              <h3 className="text-base font-bold text-texto">
                 {entidade.nome}
               </h3>
-              <span className="h-2.5 w-2.5 rounded-full bg-hub" aria-hidden />
+              <span
+                className={`h-2.5 w-2.5 rounded-full ${CORES_DOT[i % CORES_DOT.length]}`}
+                aria-hidden
+              />
             </div>
             <p className="mb-5 flex-1 text-sm leading-relaxed text-texto-suave">
               {entidade.descricao}
@@ -37,9 +45,9 @@ export function FonteCentral() {
         ))}
       </div>
 
-      <div className="mt-8 rounded-xl border border-hub/25 bg-hub/[0.05] p-6">
+      <div className="mt-8 rounded-xl border-2 border-hub bg-hub/[0.05] p-6">
         <p className="text-pretty leading-relaxed text-texto-suave">
-          <strong className="font-medium text-hub">A regra que sustenta tudo:</strong>{' '}
+          <strong className="font-bold text-hub">A regra que sustenta tudo:</strong>{' '}
           um módulo nunca cria a identidade mestre do zero. Se a informação já
           existe no Atlas, ela é reutilizada. Se ainda não existe, ela nasce no
           próprio ecossistema e fica disponível para quem precisa.

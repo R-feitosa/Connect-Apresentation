@@ -8,8 +8,10 @@ import { COR_FLUXO } from '@/lib/cores'
  *
  * Sao DOIS tracos sobrepostos, e a duplicacao e o truque:
  *   - o trilho, fino e apagado, diz que a ligacao existe;
- *   - o pulso, curto e brilhante, corre do centro para fora e diz a
- *     DIRECAO — que e a coisa que a pagina inteira precisa afirmar.
+ *   - o pulso, mais grosso e opaco (sem glow — um `drop-shadow` de brilho
+ *     ficava bem no tema escuro anterior, mas borrava feio sobre o fundo
+ *     claro atual), corre do centro para fora e diz a DIRECAO — que e a
+ *     coisa que a pagina inteira precisa afirmar.
  *
  * `pathLength={1}` normaliza o comprimento: sem isso o dash anda em
  * unidades de usuario e as conexoes curtas piscam enquanto as longas se
@@ -49,15 +51,13 @@ export function Conexao({
         fill="none"
         pathLength={1}
         stroke={ativo ? cor : COR_FLUXO}
-        strokeWidth={ativo ? 1.6 : 1.1}
+        strokeWidth={ativo ? 1.8 : 1.3}
         strokeLinecap="round"
         strokeDasharray="0.12 0.88"
         style={{
           animation: `correr-fluxo ${duracao}s linear infinite`,
           animationDelay: `${indice * -0.35}s`,
-          filter: 'drop-shadow(0 0 2px currentColor)',
-          color: ativo ? cor : COR_FLUXO,
-          opacity: ativo ? 0.95 : 0.5,
+          opacity: ativo ? 0.95 : 0.55,
           transition: 'opacity 300ms',
         }}
       />
