@@ -8,6 +8,7 @@ import { Conexao } from './Conexao'
 import { NucleoHub } from './NucleoHub'
 import { NoModulo } from './NoModulo'
 import { Etiqueta } from '@/components/ui/Etiqueta'
+import { LogoSistema } from '@/components/ui/LogoSistema'
 import type { FamiliaModulo } from '@/types/ecossistema'
 
 const RAIO_X = 78
@@ -85,21 +86,13 @@ export function OrbitaEcossistema() {
       </div>
 
       <div className="lg:col-span-5">
-        <div className="min-h-[19rem] rounded-xl border border-borda bg-gradient-to-b from-superficie-alta/60 to-superficie/40 p-6">
+        <div className="min-h-[21rem] border border-borda bg-fundo p-7">
           {moduloFocado ? (
             <div key={moduloFocado.codigo} className="animar-surgir">
-              <div className="mb-1 flex items-center gap-3">
-                <span
-                  className="inline-block h-2 w-2 rounded-full"
-                  style={{ backgroundColor: COR_FAMILIA[moduloFocado.familia] }}
-                />
-                <h3 className="text-lg font-semibold text-texto">
-                  {moduloFocado.nome}
-                </h3>
-              </div>
+              <LogoSistema codigo={moduloFocado.codigo} nome={moduloFocado.nome} className="mb-4 h-12" />
               <p className="mb-6 text-sm text-texto-suave">{moduloFocado.resumo}</p>
 
-              <p className="mb-2 font-mono text-[0.7rem] uppercase tracking-[0.15em] text-hub">
+              <p className="mb-2 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-hub">
                 Lê do HUB
               </p>
               <div className="mb-6 flex flex-wrap gap-1.5">
@@ -110,7 +103,7 @@ export function OrbitaEcossistema() {
                 ))}
               </div>
 
-              <p className="mb-2 font-mono text-[0.7rem] uppercase tracking-[0.15em] text-texto-fraco">
+              <p className="mb-2 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-texto-fraco">
                 Guarda de próprio
               </p>
               <ul className="space-y-1.5">
@@ -130,14 +123,13 @@ export function OrbitaEcossistema() {
             </div>
           ) : (
             <div>
-              <h3 className="mb-2 text-lg font-semibold text-texto">
-                {MODULOS.length} sistemas, um cadastro
+              <h3 className="mb-2 font-display text-2xl font-light text-fluxo">
+                {MODULOS.length} sistemas, <strong className="font-bold">um cadastro.</strong>
               </h3>
               <p className="mb-6 text-sm leading-relaxed text-texto-suave">
-                Passe por um módulo para ver o que ele <strong className="font-medium text-hub">lê do HUB</strong>{' '}
-                e o que ele guarda da própria regra de negócio.
+                Passe por um sistema para ver o que ele <strong className="font-semibold text-hub">lê do HUB</strong>.
               </p>
-              <p className="mb-3 font-mono text-[0.7rem] uppercase tracking-[0.15em] text-texto-fraco">
+              <p className="mb-3 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-texto-fraco">
                 Famílias
               </p>
               <ul className="space-y-2.5">

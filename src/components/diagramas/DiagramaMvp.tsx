@@ -1,73 +1,43 @@
+import { Revelar } from '@/components/anim/Revelar'
 import { PASSOS_MVP } from '@/content/mvp'
 import { cn } from '@/lib/cn'
-import { COR_HUB } from '@/lib/cores'
 
 /**
- * A esteira de um MVP novo.
- *
- * Os passos que REAPROVEITAM sao em latão; os que exigem construir sao
- * neutros. Contar as cores responde a pergunta da secao sem ler uma
- * palavra: tres de cinco ja estao prontos, e so um e trabalho novo de
- * verdade.
+ * A esteira de um MVP novo. Os passos que REAPROVEITAM ficam em navy; os
+ * que exigem construir, em papel. Contar as cores responde a secao sem
+ * ler uma palavra: tres de cinco ja estao prontos.
  */
 export function DiagramaMvp() {
+  const prontos = PASSOS_MVP.filter((p) => p.reaproveita).length
   return (
-    <ol className="relative grid gap-3 lg:grid-cols-5">
-      {/* Trilho continuo por tras dos passos, em telas largas. */}
-      <span
-        aria-hidden
-        className="absolute left-0 right-0 top-[3.25rem] hidden h-px bg-gradient-to-r from-borda via-borda-forte to-borda lg:block"
-      />
-      {PASSOS_MVP.map((passo, i) => (
-        <li key={passo.titulo} className="relative">
-          <div
-            className={cn(
-              'flex h-full flex-col rounded-xl border p-5',
-              passo.reaproveita
-                ? 'border-hub/35 bg-hub/[0.05]'
-                : 'border-borda bg-superficie/50',
-            )}
+    <div>
+      <ol className="grid border-l border-t border-borda sm:grid-cols-2 lg:grid-cols-5">
+        {PASSOS_MVP.map((passo, i) => (
+          <Revelar
+            as="li"
+            key={passo.titulo}
+            atraso={i * 0.1}
+            className={cn('flex flex-col border-b border-r border-borda p-7', passo.reaproveita ? 'bg-hub text-white' : 'bg-fundo')}
           >
+            <span className={cn('mb-5 text-xs font-semibold tracking-[0.2em]', passo.reaproveita ? 'text-lavanda' : 'text-vinho-claro')}>
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 className="mb-2 font-display text-xl font-bold tracking-tight">{passo.titulo}</h3>
+            <p className={cn('text-sm leading-relaxed', passo.reaproveita ? 'text-lavanda' : 'text-texto-suave')}>{passo.detalhe}</p>
             <span
               className={cn(
-                'mb-4 flex h-7 w-7 items-center justify-center rounded-lg font-mono text-xs',
-                passo.reaproveita
-                  ? 'bg-hub/15 text-hub'
-                  : 'bg-superficie-alta text-texto-fraco',
+                'mt-6 text-[0.66rem] font-semibold uppercase tracking-[0.18em]',
+                passo.reaproveita ? 'text-white/70' : 'text-texto-fraco',
               )}
             >
-              {i + 1}
+              {passo.reaproveita ? 'já pronto' : 'constrói'}
             </span>
-            <h3
-              className={cn(
-                'mb-2 text-sm font-semibold',
-                passo.reaproveita ? 'text-hub' : 'text-texto',
-              )}
-            >
-              {passo.titulo}
-            </h3>
-            <p className="text-sm leading-relaxed text-texto-suave">
-              {passo.detalhe}
-            </p>
-            <span
-              className={cn(
-                'mt-4 font-mono text-[0.65rem] uppercase tracking-[0.12em]',
-                passo.reaproveita ? 'text-hub/70' : 'text-texto-fraco',
-              )}
-            >
-              {passo.reaproveita ? 'reaproveita' : 'constrói'}
-            </span>
-          </div>
-        </li>
-      ))}
-      <li className="lg:col-span-5">
-        <p className="mt-4 text-sm text-texto-fraco">
-          Três dos cinco passos já estão prontos antes de o projeto começar.{' '}
-          <span style={{ color: COR_HUB }}>
-            O custo de somar um sistema para de crescer com o tamanho do ecossistema.
-          </span>
-        </p>
-      </li>
-    </ol>
+          </Revelar>
+        ))}
+      </ol>
+      <Revelar as="p" className="mt-10 font-display text-2xl font-light text-fluxo">
+        {prontos} de {PASSOS_MVP.length} passos <strong className="font-bold">já estão prontos antes do projeto começar.</strong>
+      </Revelar>
+    </div>
   )
 }

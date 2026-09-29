@@ -1,12 +1,9 @@
 import type { FluxoCadastro } from '@/types/ecossistema'
 
 /**
- * Os caminhos que um cadastro percorre.
- *
- * O ponto de todos eles e o mesmo, e por isso a secao alterna entre
- * varios: muda QUEM chega e muda ONDE o dado e usado, mas o segundo
- * passo — "nasce no HUB" — nunca muda. E essa repeticao que sustenta a
- * tese da pagina.
+ * Os caminhos que um cadastro percorre. Muda quem chega e onde o dado
+ * e usado; o segundo passo — "nasce no HUB" — nunca muda. E essa
+ * repeticao que sustenta a tese da pagina.
  */
 export const FLUXOS: readonly FluxoCadastro[] = [
   {
@@ -14,10 +11,10 @@ export const FLUXOS: readonly FluxoCadastro[] = [
     rotulo: 'Cliente',
     papel: 'cliente',
     passos: [
-      { titulo: 'Chega', detalhe: 'Empresa fecha contrato de consultoria.' },
-      { titulo: 'Nasce no HUB', detalhe: 'Identidade, CNPJ e contatos gravados uma vez.' },
-      { titulo: 'Ganha papel', detalhe: 'Papel cliente, modalidade mensal, com data de início.' },
-      { titulo: 'Aparece nos módulos', detalhe: 'Vira carteira no CRM, cobrança no Cash, projeto no Consult.' },
+      { titulo: 'Chega', detalhe: 'Fecha um contrato de consultoria.' },
+      { titulo: 'Nasce no HUB', detalhe: 'CNPJ e contatos gravados uma vez.' },
+      { titulo: 'Ganha papel', detalhe: 'Cliente mensal, com data de início.' },
+      { titulo: 'Aparece nos sistemas', detalhe: 'Carteira, cobrança e projeto.' },
     ],
     destinos: ['crm', 'cash', 'consult'],
   },
@@ -26,10 +23,10 @@ export const FLUXOS: readonly FluxoCadastro[] = [
     rotulo: 'Colaborador',
     papel: 'colaborador',
     passos: [
-      { titulo: 'Chega', detalhe: 'Pessoa é contratada pelo grupo.' },
-      { titulo: 'Nasce no HUB', detalhe: 'Mesma tabela do cliente: é uma pessoa, não um "funcionário".' },
-      { titulo: 'Ganha papel', detalhe: 'Papel colaborador, aberto pelo contrato ativo no RH.' },
-      { titulo: 'Aparece nos módulos', detalhe: 'Folha e ponto no RH, acesso e cargo nos sistemas que usa.' },
+      { titulo: 'Chega', detalhe: 'É contratado pelo grupo.' },
+      { titulo: 'Nasce no HUB', detalhe: 'Mesma tabela do cliente: é uma pessoa.' },
+      { titulo: 'Ganha papel', detalhe: 'Colaborador, aberto pelo contrato no RH.' },
+      { titulo: 'Aparece nos sistemas', detalhe: 'Folha, ponto e acessos.' },
     ],
     destinos: ['rh', 'rf_ops'],
   },
@@ -38,10 +35,10 @@ export const FLUXOS: readonly FluxoCadastro[] = [
     rotulo: 'Empresa',
     papel: 'empresa',
     passos: [
-      { titulo: 'Chega', detalhe: 'PJ entra como prospecção ou por indicação.' },
-      { titulo: 'Nasce no HUB', detalhe: 'CNPJ normalizado barra a duplicata na hora do cadastro.' },
-      { titulo: 'Ganha perfil', detalhe: 'Porte, regime e CNAE no perfil empresarial; grupo econômico se houver.' },
-      { titulo: 'Aparece nos módulos', detalhe: 'Análise no Tributário, funil no CRM, compliance no Consult.' },
+      { titulo: 'Chega', detalhe: 'Entra por prospecção ou indicação.' },
+      { titulo: 'Nasce no HUB', detalhe: 'CNPJ normalizado barra a duplicata.' },
+      { titulo: 'Ganha perfil', detalhe: 'Porte, regime, CNAE e grupo econômico.' },
+      { titulo: 'Aparece nos sistemas', detalhe: 'Análise fiscal, funil e compliance.' },
     ],
     destinos: ['tributario', 'crm', 'consult'],
   },
@@ -50,10 +47,10 @@ export const FLUXOS: readonly FluxoCadastro[] = [
     rotulo: 'Participante',
     papel: 'participante',
     passos: [
-      { titulo: 'Chega', detalhe: 'Pessoa se inscreve num evento do grupo.' },
-      { titulo: 'Nasce no HUB', detalhe: 'Se já existir como cliente, reaproveita — não cria outra ficha.' },
-      { titulo: 'Ganha papel', detalhe: 'Papel participante, que convive com os papéis que ela já tinha.' },
-      { titulo: 'Aparece nos módulos', detalhe: 'Ingresso no Valley, trilha na Academy, histórico no CRM.' },
+      { titulo: 'Chega', detalhe: 'Se inscreve num evento do grupo.' },
+      { titulo: 'Nasce no HUB', detalhe: 'Se já é cliente, reaproveita a ficha.' },
+      { titulo: 'Ganha papel', detalhe: 'Participante, junto dos papéis que já tinha.' },
+      { titulo: 'Aparece nos sistemas', detalhe: 'Ingresso, trilha e histórico.' },
     ],
     destinos: ['valley', 'academy', 'crm'],
   },

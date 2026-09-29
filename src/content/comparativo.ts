@@ -1,35 +1,28 @@
 import type { ParComparativo } from '@/types/ecossistema'
 
 /**
- * Antes x depois, em pares.
- *
- * Pares, e nao duas listas soltas: cada linha da direita responde a linha
- * da esquerda. Duas listas independentes deixam o leitor procurando a
- * correspondencia sozinho.
+ * As dores do "antes", cada uma com a resposta do Atlas.
+ * Curtas de proposito: sao lidas numa TV, a alguns metros.
  */
 export const COMPARATIVO: readonly ParComparativo[] = [
   {
-    antes: 'Cada operação mantinha seu próprio cadastro e processo',
-    depois: 'Toda aplicação lê a mesma fonte e compartilha a mesma realidade',
+    titulo: 'Cadastros duplicados',
+    antes: 'O mesmo cliente, de um jeito em cada sistema.',
+    depois: 'Uma identidade única em todo o ecossistema.',
   },
   {
-    antes: 'O mesmo cliente aparecia de forma diferente em cada sistema',
-    depois: 'A identidade é única e reconhecida em todo o ecossistema',
+    titulo: 'Números divergentes',
+    antes: 'Comercial, jurídico e financeiro sem bater.',
+    depois: 'Todas as áreas leem a mesma origem.',
   },
   {
-    antes: 'Informações eram copiadas e reconcilhadas à mão',
-    depois: 'O dado circula sem duplicação nem retrabalho manual',
+    titulo: 'Retrabalho manual',
+    antes: 'Dado copiado e conferido à mão.',
+    depois: 'Atualiza uma vez, vale para todos.',
   },
   {
-    antes: 'Dados divergiam entre comercial, jurídico e financeiro',
-    depois: 'As áreas chegam ao mesmo número e à mesma origem',
-  },
-  {
-    antes: 'Uma mudança exigia atualizar vários ambientes',
-    depois: 'Atualiza uma vez e todas as soluções enxergam a mesma versão',
-  },
-  {
-    antes: 'Um novo sistema começava do zero, recriando regras',
-    depois: 'Novo módulo nasce sobre o ecossistema que já existe',
+    titulo: 'Recomeço a cada projeto',
+    antes: 'Todo sistema novo remodelava do zero.',
+    depois: 'Módulo novo nasce sobre o que já existe.',
   },
 ]

@@ -1,27 +1,29 @@
 import type { Metadata } from 'next'
-import { Source_Serif_4, Spectral, JetBrains_Mono } from 'next/font/google'
+import { Source_Sans_3, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
 /**
- * Corpo de texto. Serifada de proposito: e a tese da direcao "Atlas
- * cartografico" — nada de grotesca geometrica generica, o texto todo
- * le como pagina de mapa antigo, nao como dashboard de SaaS.
+ * Fonte unica do site, replicando a identidade RF Group: Source Sans 3
+ * em toda parte (corpo e titulos), do peso fino (300, para titulos
+ * grandes) ao semi-negrito (700, para as palavras de destaque e o
+ * corpo mais denso). Substitui a dupla serifada (Source Serif 4 +
+ * Spectral) da direcao "Atlas cartografico" anterior.
  */
-const sourceSerif = Source_Serif_4({
+const sourceSans = Source_Sans_3({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-sans-local',
   display: 'swap',
 })
 
 /**
- * Fonte de exibicao. Serifa com desenho de atlas de biblioteca —
- * casa com o nome Atlas de forma literal, nao generica. So aparece em
- * titulos grandes; o peso dela em corpo de texto cansaria a leitura.
+ * Fonte de exibicao. Mesma familia do corpo — a identidade do rf-group
+ * usa uma unica sans em tudo, so variando o peso (300 fino em titulos,
+ * 700 nas palavras de destaque).
  */
-const spectral = Spectral({
+const spectral = Source_Sans_3({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-display',
   display: 'swap',
 })
@@ -44,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${sourceSerif.variable} ${spectral.variable} ${mono.variable}`}
+      className={`${sourceSans.variable} ${spectral.variable} ${mono.variable}`}
     >
       <body className="fundo-atlas font-sans antialiased">{children}</body>
     </html>

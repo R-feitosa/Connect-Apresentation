@@ -1,35 +1,33 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Tokens do ecossistema — direcao "Identidade RF Group"
+   Tokens — identidade RF Group
    ------------------------------------------------------------
-   Tailwind v4: o tema vive no CSS, nao num tailwind.config.js.
-   Paleta oficial do manual de marca: fundo claro institucional,
-   nucleo em navy (--color-hub) e fluxo em bordo (--color-fluxo) —
-   as duas cores de identidade do grupo, nao mais uma paleta
-   inventada de mapa antigo. As cores de familia foram escurecidas
-   em relacao a versao anterior (calibradas para fundo escuro) para
-   manterem contraste AA de texto sobre o fundo claro abaixo.
+   Tailwind v4: o tema vive no CSS. Paleta 1:1 do site institucional
+   do grupo (repo rf-group, src/styles.css :root): navy em tres
+   degraus, bordo, cinza e papel. Os nomes antigos (hub, fluxo...)
+   continuam existindo porque os diagramas os usam.
    ============================================================ */
 @theme {
-  --color-fundo: #F7F5F1;
-  --color-fundo-alto: #EFEAE0;
+  --color-fundo: #F4F3F1;          /* paper   */
+  --color-fundo-alto: #EBE9E6;     /* paper-2 */
   --color-superficie: #FFFFFF;
-  --color-superficie-alta: #FBF8F2;
-  --color-borda: #E1DACB;
-  --color-borda-forte: #B9AD8E;
+  --color-superficie-alta: #FBFAF9;
+  --color-borda: #DEDCD8;
+  --color-borda-forte: #C7C4BE;
 
-  --color-texto: #1C1C1C;
-  --color-texto-suave: #4C4C4C;
-  --color-texto-fraco: #6F6F6F;
+  --color-texto: #15172B;          /* ink   */
+  --color-texto-suave: #5D6076;    /* muted */
+  --color-texto-fraco: #8A8D9C;
 
-  --color-hub: #212965;
-  --color-hub-suave: #3A3F7A;
-  --color-fluxo: #6D0001;
-  /* Dourado, emprestado da familia Connect Academy/Valley do manual de
-     marca — usado so em pontos pequenos (marquee, selos) como um brilho
-     ocasional sobre o navy, nunca como cor de texto corrido. */
-  --color-acento: #F5CD55;
+  --color-hub: #212965;            /* navy-3 */
+  --color-hub-suave: #141A45;      /* navy-2 */
+  --color-navy-fundo: #0A0E2B;     /* navy   */
+  --color-navy-alto: #141A45;
+  --color-fluxo: #5F0006;          /* wine   */
+  --color-vinho-claro: #8A0F1A;    /* wine-2 */
+  --color-lavanda: #C9CDF0;        /* texto claro sobre navy */
+  --color-rosa: #E5A0A6;           /* bordo claro sobre navy */
 
   --color-comercial: #966618;
   --color-juridico: #475DF5;
@@ -40,47 +38,23 @@
   --font-sans: var(--font-sans-local), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-display), var(--font-sans-local), ui-sans-serif, sans-serif;
   --font-mono: var(--font-mono-local), ui-monospace, SFMono-Regular, monospace;
+
+  --ease-marca: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 html {
   scroll-behavior: smooth;
   color-scheme: light;
-  /* Trava scroll horizontal indevido — util de qualquer forma como
-     rede de seguranca contra qualquer elemento que sangre para fora
-     da borda no futuro. */
   overflow-x: hidden;
-  /* Escala tudo (texto, espacamento, diagramas) um pouco acima do
-     tamanho de tela normal: quase todo o site usa unidades `rem`, que
-     seguem o tamanho de fonte da raiz — um numero so aqui aumenta a
-     pagina inteira de forma proporcional, sem reescrever cada
-     componente. E para leitura a distancia (TV de estande), nao para
-     tela de colo.
-     112.5% cortava conteudo no modo estande: a janela real de um
-     navegador (com barra de endereco, abas) tem bem menos altura util
-     que os 1080px "de laboratorio" usados pra testar. 106% e um meio
-     termo que sobra menos margem de erro. */
+  /* Leitura a distancia (TV de estande): quase tudo e `rem`, entao um
+     numero so aqui escala a pagina inteira. 106% cabe numa janela real
+     de navegador sem cortar o modo estande. */
   font-size: 106%;
 }
 
-/* Grao via SVG feTurbulence, embutido no fundo (nao numa camada
-   `position: fixed` separada). Um layer fixo com `mix-blend-mode`
-   fica sempre por cima e obriga o navegador a recompor esse blend a
-   cada frame contra qualquer coisa animando por baixo (marquee, pulso
-   do nucleo) — em GPU integrada isso pesa muito. Como camada de fundo
-   comum, o grao e pintado uma vez com o resto e nao recompoe nada
-   durante as animacoes da pagina.
-   Em classe (nao soldado no seletor `body`) porque o overlay do modo
-   estande — um `position: fixed` por cima da pagina real — precisa do
-   mesmo fundo, senao o vao das bordas quando um slide encolhe pra
-   caber deixaria a pagina de verdade transparecer por tras. */
-.fundo-atlas {
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E"),
-    radial-gradient(circle at top, rgba(33, 41, 101, 0.05), transparent 28%),
-    linear-gradient(180deg, var(--color-fundo) 0%, var(--color-fundo-alto) 100%);
-  background-blend-mode: multiply, normal, normal;
-  background-repeat: repeat, no-repeat, no-repeat;
-}
+/* Fundo papel. Em classe (nao no seletor body) porque o overlay do modo
+   estande precisa do mesmo fundo por tras dos slides claros. */
+.fundo-atlas { background: var(--color-fundo); }
 
 body {
   color: var(--color-texto);
@@ -89,81 +63,234 @@ body {
   overflow-x: hidden;
 }
 
-::selection {
-  background: rgba(33, 41, 101, 0.18);
-  color: var(--color-texto);
+::selection { background: rgba(95, 0, 6, 0.18); color: var(--color-texto); }
+
+/* Classes de componente em @layer: assim utilidades do Tailwind no
+   mesmo elemento (ex.: px-5 num .btn) ainda conseguem sobrescrever. */
+@layer components {
+/* ------------------------------------------------------------
+   Tipografia da marca: titulo fino (300) + palavra-chave em negrito,
+   bordo sobre papel, lavanda sobre navy.
+   ------------------------------------------------------------ */
+.titulo-marca {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--color-fluxo);
+  text-wrap: balance;
+}
+.titulo-marca strong { font-weight: 700; }
+.escuro .titulo-marca { color: var(--color-lavanda); }
+.escuro .titulo-marca strong { color: #fff; }
+
+/* Sobretitulo com o traco que se desenha ao entrar na tela. */
+.sobretitulo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-vinho-claro);
+}
+.sobretitulo::before {
+  content: "";
+  width: 36px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s var(--ease-marca) 0.2s;
+}
+.sobretitulo.in::before, .in .sobretitulo::before, body.pronto .hero .sobretitulo::before { transform: scaleX(1); }
+.escuro .sobretitulo { color: var(--color-rosa); }
+
+/* ------------------------------------------------------------
+   Botoes: borda fina, caixa-alta espacada, preenchimento que sobe.
+   ------------------------------------------------------------ */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  padding: 15px 30px;
+  border: 1px solid currentColor;
+  background: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.5s var(--ease-marca), border-color 0.5s, transform 0.3s var(--ease-marca);
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: currentColor;
+  transform: translateY(101%);
+  transition: transform 0.5s var(--ease-marca);
+}
+.btn > * { position: relative; z-index: 1; transition: color 0.5s var(--ease-marca), transform 0.5s var(--ease-marca); }
+.btn:hover::before { transform: none; }
+.btn svg { width: 16px; height: 16px; }
+.btn:hover svg { transform: translateX(5px); }
+.btn-claro { color: #fff; }
+.btn-claro:hover > * { color: var(--color-navy-fundo); }
+.btn-escuro { color: var(--color-hub); }
+.btn-escuro:hover > * { color: #fff; }
+
+/* ------------------------------------------------------------
+   Revelar ao rolar (classe `in` posta por IntersectionObserver).
+   ------------------------------------------------------------ */
+.rv   { opacity: 0; transform: translateY(46px); }
+.rv-l { opacity: 0; transform: translateX(-60px); }
+.rv-r { opacity: 0; transform: translateX(60px); }
+.rv-s { opacity: 0; transform: scale(0.9) translateY(24px); }
+.rv, .rv-l, .rv-r, .rv-s {
+  transition: opacity 1s var(--ease-marca), transform 1.1s var(--ease-marca),
+    background-color 0.5s, color 0.5s;
+  transition-delay: var(--d, 0s), var(--d, 0s), 0s, 0s;
+}
+.rv.in, .rv-l.in, .rv-r.in, .rv-s.in { opacity: 1; transform: none; }
+
+/* Entrada do Hero, disparada quando o preloader sai (body.pronto). */
+.surge { opacity: 0; transform: translateY(24px); transition: opacity 1.1s var(--ease-marca), transform 1.1s var(--ease-marca); }
+body.pronto .surge { opacity: 1; transform: none; }
+.palavra { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.12em; }
+.palavra > i { display: inline-block; font-style: normal; transform: translateY(105%); transition: transform 1.2s var(--ease-marca); }
+body.pronto .palavra > i { transform: none; }
+
 }
 
-/* Faixa de texto corrida (marquee). Duplicamos o conteudo no JSX e
-   deslocamos exatamente 50%: como as duas copias sao identicas, o
-   ponto em que a primeira sai coincide com o em que a segunda entra,
-   sem salto. */
-@keyframes deslizar-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+/* ------------------------------------------------------------
+   Preloader, barra de progresso e brilho do cursor.
+   ------------------------------------------------------------ */
+#pre {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--color-navy-fundo);
+  transition: transform 1.1s var(--ease-marca) 0.2s, visibility 0s 1.4s;
+}
+#pre .marca { overflow: hidden; color: #fff; font-weight: 600; font-size: 1.6rem; letter-spacing: 0.42em; text-transform: uppercase; }
+#pre .marca span { display: inline-block; transform: translateY(110%); animation: subir 0.9s var(--ease-marca) forwards; }
+#pre .barra { position: absolute; bottom: 38%; width: 160px; height: 1px; overflow: hidden; background: rgba(255, 255, 255, 0.18); }
+#pre .barra i { display: block; width: 100%; height: 100%; background: #fff; transform: translateX(-100%); animation: carregar 1.3s var(--ease-marca) forwards; }
+body.pronto #pre { transform: translateY(-100%); visibility: hidden; }
+@keyframes subir { to { transform: none; } }
+@keyframes carregar { to { transform: none; } }
+
+#progresso {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--color-fluxo), var(--color-hub));
+}
+#brilho {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(33, 41, 101, 0.14), transparent 65%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.6s;
 }
 
-.marquee-trilho {
-  animation: deslizar-marquee 32s linear infinite;
-  /* Avisa o navegador para promover isto a uma camada de composicao
-     GPU separada desde o inicio, em vez de descobrir isso so no
-     primeiro frame animado. */
-  will-change: transform;
+/* ------------------------------------------------------------
+   Hero: degrade navy, palco com anéis, orbe e logos em orbita.
+   ------------------------------------------------------------ */
+.hero-fundo { background: radial-gradient(120% 90% at 75% 40%, var(--color-hub) 0%, var(--color-hub-suave) 38%, var(--color-navy-fundo) 78%); }
+.anel { position: absolute; inset: 0; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 50%; }
+.anel.a1 { animation: girar 40s linear infinite reverse; }
+.anel.a2 { inset: -7%; border-style: dashed; border-color: rgba(255, 255, 255, 0.1); animation: girar 60s linear infinite; }
+.anel::after {
+  content: "";
+  position: absolute;
+  top: 12%;
+  left: 14%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 18px 4px rgba(255, 255, 255, 0.55);
 }
+.anel.a2::after { top: auto; left: auto; bottom: 8%; right: 18%; background: var(--color-vinho-claro); box-shadow: 0 0 18px 4px rgba(138, 15, 26, 0.8); }
+.orbe { position: absolute; inset: 14%; border-radius: 50%; background: radial-gradient(circle, rgba(201, 205, 240, 0.28), transparent 68%); filter: blur(30px); animation: pulsar 6s ease-in-out infinite; }
 
-@media (prefers-reduced-motion: reduce) {
-  .marquee-trilho { animation: none; }
-}
+/* Orbita: o trilho gira; cada item gira ao contrario na mesma
+   velocidade, entao o logo fica sempre de pe. So transform — composto
+   na GPU, nao repinta nada. */
+.orbita { position: absolute; inset: 0; animation: girar var(--dur, 80s) linear infinite; }
+.orbita.inversa { animation-direction: reverse; }
+.orbita-item { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1)); }
+/* `translate` (propriedade) centraliza o logo no ponto da orbita; a
+   rotacao da animacao acontece em volta do proprio centro dele. */
+.orbita-item > div { position: absolute; left: 0; top: 0; width: max-content; translate: -50% -50%; animation: girar var(--dur, 80s) linear infinite reverse; }
+.orbita.inversa .orbita-item > div { animation-direction: normal; }
+.palco:hover .orbita, .palco:hover .orbita-item > div { animation-play-state: paused; }
 
-/* Trilho de conexao: o traco caminha do centro para fora.
-   `pathLength=1` no SVG normaliza o dash, entao a velocidade fica igual
-   em conexoes curtas e longas — sem isso, os nos mais proximos piscam
-   rapido e os distantes arrastam. */
-@keyframes correr-fluxo {
-  from { stroke-dashoffset: 1; }
-  to   { stroke-dashoffset: 0; }
-}
+.rolar-dica i { position: relative; width: 1px; height: 46px; overflow: hidden; background: rgba(255, 255, 255, 0.2); }
+.rolar-dica i::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 50%; background: #fff; animation: pingar 2s var(--ease-marca) infinite; }
 
-/* So opacidade: `transform: scale` num circulo SVG com cx/cy em 0
-   desloca o desenho conforme o transform-origin resolvido, e o anel
-   saia de centro. Respirar de opacidade basta e nao move nada. */
-@keyframes pulsar-nucleo {
-  0%, 100% { stroke-opacity: 0.12; }
-  50%      { stroke-opacity: 0.32; }
-}
+@keyframes girar { to { transform: rotate(360deg); } }
+@keyframes pulsar { 50% { transform: scale(1.15); opacity: 0.7; } }
+@keyframes pingar { from { transform: translateY(-100%); } to { transform: translateY(220%); } }
 
-@keyframes surgir {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: none; }
-}
+/* Halo colorido atras de cada logo de sistema. */
+.halo-logo { position: absolute; inset: 8% 12%; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--c) 30%, transparent), transparent 70%); filter: blur(22px); opacity: 0.55; transition: opacity 0.6s, transform 0.8s var(--ease-marca); }
+.cartao-sistema:hover .halo-logo { opacity: 1; transform: scale(1.15); }
 
-.animar-surgir {
-  animation: surgir 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
+/* ------------------------------------------------------------
+   Faixa corrida (marquee). O conteudo e duplicado no JSX e anda
+   exatamente 50%: as duas copias sao identicas, o corte e invisivel.
+   ------------------------------------------------------------ */
+@keyframes deslizar-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-trilho { animation: deslizar-marquee 32s linear infinite; will-change: transform; }
 
-/* Transicao entre slides do modo estande — o efeito de "rolagem" que
-   o slide-show, ao trocar de secao inteira em vez de rolar a pagina
-   de verdade, tinha perdido. Slide de saida e o de entrada se movem
-   juntos, na mesma direcao: parece um scroll de verdade, nao um corte
-   seco. A duracao (550ms) precisa bater com `DURACAO_TRANSICAO_MS` em
-   `ModoEstande.tsx`. */
-@keyframes slide-sai-para-cima  { to   { transform: translateY(-100%); } }
-@keyframes slide-sai-para-baixo { to   { transform: translateY(100%); } }
+/* Diagramas */
+@keyframes correr-fluxo { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes pulsar-nucleo { 0%, 100% { stroke-opacity: 0.12; } 50% { stroke-opacity: 0.32; } }
+@keyframes surgir { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.animar-surgir { animation: surgir 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Transicao entre slides do modo estande (550ms = DURACAO_TRANSICAO_MS). */
+@keyframes slide-sai-para-cima  { to { transform: translateY(-100%); } }
+@keyframes slide-sai-para-baixo { to { transform: translateY(100%); } }
 @keyframes slide-entra-de-baixo { from { transform: translateY(100%); } to { transform: translateY(0); } }
 @keyframes slide-entra-de-cima  { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-
-.animar-slide-sai-cima   { animation: slide-sai-para-cima  550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
-.animar-slide-sai-baixo  { animation: slide-sai-para-baixo 550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.animar-slide-sai-cima    { animation: slide-sai-para-cima  550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.animar-slide-sai-baixo   { animation: slide-sai-para-baixo 550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
 .animar-slide-entra-baixo { animation: slide-entra-de-baixo 550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
 .animar-slide-entra-cima  { animation: slide-entra-de-cima  550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
 
-/* Respeita quem pediu menos movimento. Nao e enfeite: o diagrama
-   continua legivel parado, entao desligar nao custa informacao. */
+/* Menos movimento: tudo aparece parado e ja no lugar. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
   }
+  .rv, .rv-l, .rv-r, .rv-s, .surge { opacity: 1; transform: none; }
+  .palavra > i { transform: none; }
+  .marquee-trilho { animation: none; }
 }

@@ -1,33 +1,31 @@
 import { cn } from '@/lib/cn'
 import { Container } from './Container'
 
+const TOM = {
+  papel: 'bg-fundo text-texto',
+  papel2: 'bg-fundo-alto text-texto',
+  escuro: 'escuro bg-navy-fundo text-white',
+} as const
+
 /**
- * Bloco de secao com respiro vertical padronizado.
- *
- * O `id` alimenta a navegacao por ancora; o espacamento e o mesmo em
- * todas para a pagina ter cadencia de apresentacao, nao de dashboard.
+ * Bloco de secao. As secoes alternam entre os dois papeis e o navy, como
+ * no site institucional — a troca de fundo marca o capitulo, sem precisar
+ * de linhas divisorias.
  */
 export function Secao({
   id,
   children,
   className,
-  comLinhaSuperior = true,
+  tom = 'papel',
 }: {
   id?: string
   children: React.ReactNode
   className?: string
-  comLinhaSuperior?: boolean
+  tom?: keyof typeof TOM
 }) {
   return (
-    <section
-      id={id}
-      className={cn(
-        'scroll-mt-20 py-14 sm:py-20',
-        comLinhaSuperior && 'border-t border-borda/60',
-        className,
-      )}
-    >
-      <Container>{children}</Container>
+    <section id={id} className={cn('relative scroll-mt-16 overflow-hidden py-20 sm:py-28', TOM[tom], className)}>
+      <Container className="relative">{children}</Container>
     </section>
   )
 }
