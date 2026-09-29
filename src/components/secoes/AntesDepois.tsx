@@ -28,7 +28,7 @@ export function AntesDepois() {
             </span>
           </div>
           <div className="px-6 py-4">
-            <span className="font-mono text-[0.7rem] font-bold uppercase tracking-[0.15em] text-fluxo">
+            <span className="font-mono text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-fluxo">
               Depois — Atlas como base compartilhada
             </span>
           </div>

@@ -4,32 +4,35 @@
    Tokens do ecossistema — direcao "Identidade RF Group"
    ------------------------------------------------------------
    Tailwind v4: o tema vive no CSS, nao num tailwind.config.js.
-   Paleta oficial do manual de marca: fundo claro institucional,
-   nucleo em navy (--color-hub) e fluxo em bordo (--color-fluxo) —
-   as duas cores de identidade do grupo, nao mais uma paleta
-   inventada de mapa antigo. As cores de familia foram escurecidas
-   em relacao a versao anterior (calibradas para fundo escuro) para
-   manterem contraste AA de texto sobre o fundo claro abaixo.
+   Paleta portada 1:1 do design system institucional real do grupo
+   (rf-group/src/styles.css :root): fundo em papel claro, nucleo em
+   navy (--color-hub) e fluxo em bordo exato do manual (--color-fluxo).
+   Sem dourado — o rf-group so usa navy/bordo/cinza/papel. As cores de
+   familia do diagrama do ecossistema (comercial/juridico/pessoas/
+   operacoes/eventos) sao convencao interna do Atlas e ficam como
+   estavam.
    ============================================================ */
 @theme {
-  --color-fundo: #F7F5F1;
-  --color-fundo-alto: #EFEAE0;
+  --color-fundo: #F4F3F1;
+  --color-fundo-alto: #EBE9E6;
   --color-superficie: #FFFFFF;
-  --color-superficie-alta: #FBF8F2;
-  --color-borda: #E1DACB;
-  --color-borda-forte: #B9AD8E;
+  --color-superficie-alta: #FBFAF9;
+  --color-borda: #DEDCD8;
+  --color-borda-forte: #C7C4BE;
 
-  --color-texto: #1C1C1C;
-  --color-texto-suave: #4C4C4C;
-  --color-texto-fraco: #6F6F6F;
+  --color-texto: #15172B;
+  --color-texto-suave: #5D6076;
+  --color-texto-fraco: #8A8D9C;
 
   --color-hub: #212965;
-  --color-hub-suave: #3A3F7A;
-  --color-fluxo: #6D0001;
-  /* Dourado, emprestado da familia Connect Academy/Valley do manual de
-     marca — usado so em pontos pequenos (marquee, selos) como um brilho
-     ocasional sobre o navy, nunca como cor de texto corrido. */
-  --color-acento: #F5CD55;
+  --color-hub-suave: #141A45;
+  --color-fluxo: #5F0006;
+
+  /* Fundo escuro do Hero (e outras secoes escuras, ex. numeros) —
+     navy mais profundo que --color-hub, para o degrade radial do
+     rf-group (hub -> hub-suave -> navy-fundo). */
+  --color-navy-fundo: #0A0E2B;
+  --color-navy-alto: #141A45;
 
   --color-comercial: #966618;
   --color-juridico: #475DF5;
@@ -90,7 +93,7 @@ body {
 }
 
 ::selection {
-  background: rgba(33, 41, 101, 0.18);
+  background: rgba(95, 0, 6, 0.18);
   color: var(--color-texto);
 }
 

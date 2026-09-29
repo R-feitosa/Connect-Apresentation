@@ -29,7 +29,7 @@ export function FonteCentral() {
         {ENTIDADES_MESTRES.map((entidade, i) => (
           <Cartao key={entidade.codigo} comBrilho className="flex flex-col">
             <div className="mb-4 flex items-center justify-between gap-3">
-              <h3 className="text-base font-bold text-texto">
+              <h3 className="text-base font-semibold text-texto">
                 {entidade.nome}
               </h3>
               <span
@@ -47,7 +47,7 @@ export function FonteCentral() {
 
       <div className="mt-8 rounded-xl border-2 border-hub bg-hub/[0.05] p-6">
         <p className="text-pretty leading-relaxed text-texto-suave">
-          <strong className="font-bold text-hub">A regra que sustenta tudo:</strong>{' '}
+          <strong className="font-semibold text-hub">A regra que sustenta tudo:</strong>{' '}
           um módulo nunca cria a identidade mestre do zero. Se a informação já
           existe no Atlas, ela é reutilizada. Se ainda não existe, ela nasce no
           próprio ecossistema e fica disponível para quem precisa.

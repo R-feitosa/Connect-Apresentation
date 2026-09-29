@@ -16,7 +16,7 @@ export function TituloSecao({
         <p className="mb-4 font-mono text-xs font-bold uppercase tracking-[0.2em] text-fluxo">
           {etiqueta}
         </p>
-        <h2 className="text-balance font-display text-3xl font-bold leading-[1.05] tracking-tight text-texto sm:text-5xl">
+        <h2 className="text-balance font-display text-3xl font-light leading-[1.05] tracking-tight text-texto sm:text-5xl">
           {titulo}
         </h2>
         {descricao && (

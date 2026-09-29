@@ -39,4 +39,4 @@ export const ROTULO_FAMILIA: Record<FamiliaModulo, string> = {
 /** Cor do nucleo. Navy da marca — e o unico elemento que a usa. */
 export const COR_HUB = '#212965'
 /** Cor do dado em movimento. Bordo da marca, reservada a animacao de fluxo. */
-export const COR_FLUXO = '#6D0001'
+export const COR_FLUXO = '#5F0006'

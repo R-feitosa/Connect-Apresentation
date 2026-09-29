@@ -31,7 +31,7 @@ export function Beneficios() {
             >
               <IconeBeneficio nome={beneficio.icone} />
             </span>
-            <h3 className="mb-2 text-base font-bold text-texto">
+            <h3 className="mb-2 text-base font-semibold text-texto">
               {beneficio.titulo}
             </h3>
             <p className="text-sm leading-relaxed text-texto-suave">
