@@ -40,3 +40,31 @@ export const ROTULO_FAMILIA: Record<FamiliaModulo, string> = {
 export const COR_HUB = '#212965'
 /** Cor do dado em movimento. Bordo da marca, reservada a animacao de fluxo. */
 export const COR_FLUXO = '#6D0001'
+
+/**
+ * Cor de identidade de cada app — nao a da familia (essa agrupa; esta
+ * distingue). O manual de marca da um icone proprio para cada app do
+ * ecossistema (a mesma marca de "duas flechas", recolorida por app); as
+ * quatro primeiras aqui saem direto do manual (Atlas RH, Legal Ops, Atlas
+ * CRM, Atlas Juris — que usa o proprio bordo da marca). Os sete apps sem
+ * icone no manual (`rf_ops`, `consult`, `valley`, `tributario`, `cash`,
+ * `academy`, `imoveis`) ganharam uma cor nova seguindo o mesmo padrao:
+ * uma cor propria, nao repetida, que nao precisa bater contraste AA
+ * (e so a cor de um traco pequeno dentro de um circulo claro, nunca
+ * texto corrido).
+ */
+export const COR_MODULO: Record<string, string> = {
+  // Do manual de marca
+  rh: '#7C5CD1',
+  legal_ops: '#F2916A',
+  crm: '#4FAE63',
+  juris: '#6D0001',
+  // Novos, no mesmo padrao
+  rf_ops: '#2AA9A0',
+  consult: '#4A5FBF',
+  valley: '#D4A62A',
+  tributario: '#8B5E2B',
+  cash: '#2E9B6B',
+  academy: '#E08E3D',
+  imoveis: '#3B6FA0',
+}
