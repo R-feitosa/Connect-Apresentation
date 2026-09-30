@@ -92,8 +92,22 @@ export function NoModulo({
 function MarcaNo({ codigo, sigla, cor }: { codigo: string; sigla: string; cor: string }) {
   const v = VISUAL_SISTEMA[codigo]
   if (v?.marca) {
-    const l = codigo === 'ponto' ? 14.6 : 13.2
-    return <image href={v.marca.src} x={-l / 2} y={-l / 2 + (codigo === 'ponto' ? 0 : 1.1)} width={l} height={l} pointerEvents="none" />
+    if (codigo === 'ponto') {
+      // Icone quadrado de app: ampliado e recortado no circulo, para o
+      // fundo navy do proprio icone preencher o no inteiro.
+      const l = 20
+      return (
+        <g pointerEvents="none">
+          <clipPath id={`clip-no-${codigo}`}>
+            <circle r={9.1} />
+          </clipPath>
+          <circle r={9.1} fill="#121a30" />
+          <image href={v.marca.src} x={-l / 2} y={-l / 2} width={l} height={l} clipPath={`url(#clip-no-${codigo})`} />
+        </g>
+      )
+    }
+    const l = 13.2
+    return <image href={v.marca.src} x={-l / 2} y={-l / 2 + 1.1} width={l} height={l} pointerEvents="none" />
   }
   if (v?.empresa) {
     const m = MARCAS_EMPRESAS[v.empresa]
