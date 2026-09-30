@@ -52,7 +52,7 @@ export function montarPalco(host: HTMLElement, canvas: HTMLCanvasElement, opcoes
   cena.add(tudo)
 
   // Nucleo: o logo do grupo
-  const nucleo = construirLogoGrupo(mats, 0.92)
+  const nucleo = construirLogoGrupo(mats, 0.6)
   tudo.add(nucleo)
 
   // Orbitas

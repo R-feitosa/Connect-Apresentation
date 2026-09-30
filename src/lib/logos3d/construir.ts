@@ -253,7 +253,7 @@ export function construirLogoGrupo(mats: FabricaMateriais, altura: number) {
   const grupo = new THREE.Group()
   paths.forEach((caminho, i) => {
     const p = pecas[i]
-    const formas = SVGLoader.createShapes(caminho)
+    const formas = caminho.toShapes()
     if (!formas.length) return
     const geo = extrudar(formas, p.prof, altura * 0.006)
     // SVG tem y para baixo: espelha e centraliza.
