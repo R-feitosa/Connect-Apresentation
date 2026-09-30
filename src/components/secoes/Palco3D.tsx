@@ -5,7 +5,7 @@ import iconePonto from '@/assets/logos/ponto-icone.png'
 import { PalcoOrbita } from './PalcoOrbita'
 
 /**
- * O palco do Hero em 3D: HUB no centro e os sistemas em orbita, com os
+ * O palco do Hero em 3D: o logo do RFEITOSA GROUP no centro e os sistemas em orbita, com os
  * logos extrudados em three.js (pacote de logos 3D da RF Group).
  *
  * three.js so e baixado no navegador, depois da pagina pronta (import
@@ -49,7 +49,7 @@ export function Palco3D() {
       <div className="orbe" />
       <div className="anel a1" />
       <div className="anel a2" />
-      <div ref={host} className="absolute -inset-[4%] sm:-inset-[18%]" aria-label="Atlas HUB no centro e os onze sistemas em órbita" role="img">
+      <div ref={host} className="absolute -inset-[4%] sm:-inset-[18%]" aria-label="Logo do RFEITOSA GROUP no centro e os onze sistemas em órbita" role="img">
         <canvas
           ref={canvas}
           className="block h-full w-full transition-opacity duration-1000"

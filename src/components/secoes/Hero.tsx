@@ -16,7 +16,7 @@ const PALAVRAS: [string, boolean][] = [
 /**
  * Hero escuro no padrao do site institucional: degrade navy, rede de
  * particulas, titulo que sobe palavra por palavra quando o preloader sai,
- * e o palco com o HUB no centro e os sistemas em orbita.
+ * e o palco com o logo do grupo no centro e os sistemas em orbita.
  */
 export function Hero() {
   return (

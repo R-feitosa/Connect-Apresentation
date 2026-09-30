@@ -1,13 +1,13 @@
 import * as THREE from 'three'
 import { LOGOS_3D } from './dados'
-import { FabricaMateriais, construirLogo, construirMedalha, construirPonto, descartarArvore } from './construir'
+import { FabricaMateriais, construirLogo, construirLogoGrupo, construirMedalha, construirPonto, descartarArvore } from './construir'
 import { MARCAS_EMPRESAS } from '@/content/marcas-empresas'
 
 /**
- * A cena do palco do Hero: o HUB em 3D no centro e os sistemas em duas
+ * A cena do palco do Hero: o logo do RFEITOSA GROUP em 3D no centro e os sistemas em duas
  * orbitas inclinadas, em sentidos opostos, como um atomo. Os logos ficam
  * sempre de frente para a camera, balancando o suficiente para mostrar a
- * espessura; o que passa por tras do HUB e escondido por ele de verdade.
+ * espessura; o que passa por tras do logo central e escondido por ele de verdade.
  *
  * Feita para a TV do estande (PC fraco, ligada o dia todo):
  *  - um renderer so, DPR limitado a 1.5, sem sombras nem pos-processamento;
@@ -33,7 +33,7 @@ export function montarPalco(host: HTMLElement, canvas: HTMLCanvasElement, opcoes
   renderer.setClearColor(0x000000, 0)
 
   const cena = new THREE.Scene()
-  cena.fog = new THREE.Fog(0x141a45, 13, 26)
+  cena.fog = new THREE.Fog(0x141a45, 14.8, 27)
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60)
   camera.position.set(0, 0.6, 14.2)
   camera.lookAt(0, 0, 0)
@@ -51,9 +51,9 @@ export function montarPalco(host: HTMLElement, canvas: HTMLCanvasElement, opcoes
   const tudo = new THREE.Group()
   cena.add(tudo)
 
-  // Nucleo
-  const hub = construirLogo(LOGOS_3D.hub, mats, { altura: 1.25, espessura: 0.09 })
-  tudo.add(hub)
+  // Nucleo: o logo do grupo
+  const nucleo = construirLogoGrupo(mats, 0.92)
+  tudo.add(nucleo)
 
   // Orbitas
   const texturaPonto = new THREE.TextureLoader().load(opcoes.texturaPonto, () => desenharUmaVez())
@@ -113,8 +113,8 @@ export function montarPalco(host: HTMLElement, canvas: HTMLCanvasElement, opcoes
   let pronto = false
 
   function posicionar(seg: number) {
-    hub.rotation.y = Math.sin(seg / 2.2) * 0.45
-    hub.position.y = Math.sin(seg / 1.6) * 0.04
+    nucleo.rotation.y = Math.sin(seg / 2.2) * 0.35
+    nucleo.position.y = Math.sin(seg / 1.6) * 0.04
     tudo.rotation.y += (alvo.x * 0.28 - tudo.rotation.y) * 0.05
     tudo.rotation.x += (alvo.y * 0.16 - tudo.rotation.x) * 0.05
     for (const o of orbitas) {

@@ -1,6 +1,8 @@
 import * as THREE from 'three'
+import { SVGLoader } from 'three/addons/loaders/SVGLoader.js'
 import type { Contorno, Logo3D } from './tipos'
 import type { MarcaEmpresa } from '@/content/marcas-empresas'
+import { LOGO_EITOSA, LOGO_GROUP, LOGO_MONO, LOGO_TRI, LOGO_VIEWBOX } from '@/content/logo-grupo'
 
 /**
  * Montagem dos logos 3D (three.js). E o `buildLogo` do pacote de logos 3D
@@ -25,18 +27,22 @@ export interface OpcoesLogo {
 export class FabricaMateriais {
   private cache = new Map<string, THREE.MeshStandardMaterial>()
 
-  cor(hex: string) {
-    let m = this.cache.get(hex)
+  /** `fiel`: usa a cor exata, sem o clareamento para fundo escuro. */
+  cor(hex: string, fiel = false) {
+    const chave = fiel ? hex + '!' : hex
+    let m = this.cache.get(chave)
     if (!m) {
-      const c = paraFundoEscuro(new THREE.Color(hex))
+      const c = fiel ? new THREE.Color(hex) : paraFundoEscuro(new THREE.Color(hex))
       m = new THREE.MeshStandardMaterial({
         color: c,
         emissive: c,
-        emissiveIntensity: 0.16,
+        // Tons claros (letras do logo do grupo) brilham um pouco mais: sem
+        // isso o branco le como cinza na sombra da cena.
+        emissiveIntensity: c.getHSL({ h: 0, s: 0, l: 0 }).l > 0.85 ? 0.42 : 0.16,
         roughness: 0.3,
         metalness: 0.18,
       })
-      this.cache.set(hex, m)
+      this.cache.set(chave, m)
     }
     return m
   }
@@ -216,6 +222,45 @@ export function construirPonto(texto: Logo3D, textura: THREE.Texture, mats: Fabr
 
   const largura = (270 + texto.largura) * u
   grupo.children.forEach((c) => (c.position.x -= largura / 2))
+  return grupo
+}
+
+/**
+ * Logo do RFEITOSA GROUP em 3D, a partir do mesmo vetor oficial do
+ * cabecalho (logo-grupo.ts). O simbolo de triangulos e o mais espesso; o
+ * monograma "R" salta um pouco alem dele, e "EITOSA"/"GROUP" ficam em
+ * relevo mais baixo. Sobre o navy do Hero, as letras usam a versao clara
+ * da marca (a mesma do rodape) e os triangulos, as cores oficiais
+ * levemente avivadas para nao sumirem no fundo.
+ */
+export function construirLogoGrupo(mats: FabricaMateriais, altura: number) {
+  const [, , vw, vh] = LOGO_VIEWBOX.split(' ').map(Number)
+  const s = altura / vh
+  const esp = altura * 0.1
+  const corTri: Record<string, string> = { '#1a2253': '#34449c', '#5f0006': '#a3172a' }
+  const pecas: { d: string; cor: string; prof: number; z: number }[] = [
+    ...LOGO_TRI.map((t) => ({ d: t.d, cor: corTri[t.color.toLowerCase()] ?? '#9a9a9a', prof: esp, z: 0 })),
+    { d: LOGO_MONO, cor: '#ffffff', prof: esp * 1.2, z: 0 },
+    { d: LOGO_EITOSA, cor: '#ffffff', prof: esp * 0.7, z: 0 },
+    { d: 'M258 103.5H455V105.5H258Z', cor: '#ffffff', prof: esp * 0.5, z: 0 },
+    { d: LOGO_GROUP, cor: '#ffffff', prof: esp * 0.5, z: 0 },
+  ]
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${LOGO_VIEWBOX}">${pecas
+    .map((p) => `<path fill="#000" fill-rule="evenodd" d="${p.d}"/>`)
+    .join('')}</svg>`
+  const { paths } = new SVGLoader().parse(svg)
+
+  const grupo = new THREE.Group()
+  paths.forEach((caminho, i) => {
+    const p = pecas[i]
+    const formas = SVGLoader.createShapes(caminho)
+    if (!formas.length) return
+    const geo = extrudar(formas, p.prof, altura * 0.006)
+    // SVG tem y para baixo: espelha e centraliza.
+    geo.scale(s, -s, 1)
+    geo.translate((-vw / 2) * s, (vh / 2) * s, -esp / 2)
+    grupo.add(new THREE.Mesh(geo, mats.cor(p.cor, true)))
+  })
   return grupo
 }
 

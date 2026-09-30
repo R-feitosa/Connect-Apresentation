@@ -1,7 +1,6 @@
-import Image from 'next/image'
 import type { CSSProperties } from 'react'
 import { MODULOS } from '@/content/ecossistema'
-import { LOGO_HUB } from '@/content/sistemas'
+import { LogoGrupo } from '@/components/ui/LogoGrupo'
 import { LogoSistema } from '@/components/ui/LogoSistema'
 
 // As logos mais largas (Tributario, Consult) ficam na orbita externa: nas
@@ -13,7 +12,7 @@ const EXTERNOS = MODULOS.filter((m) => !INTERNOS.includes(m.codigo))
 
 /**
  * Versao em CSS do palco do Hero (fallback do Palco3D quando nao ha
- * WebGL): o HUB num medalhao branco no centro e as logos de todos os
+ * WebGL): o logo do grupo no centro e as logos de todos os
  * sistemas girando em duas orbitas, em sentidos opostos. So transform,
  * composto na GPU. O raio
  * vem em `cqw` (largura do proprio palco), entao as orbitas acompanham o
@@ -29,8 +28,8 @@ export function PalcoOrbita() {
       <Orbita modulos={INTERNOS.map(doCodigo)} raio="26cqw" duracao="70s" />
       <Orbita modulos={EXTERNOS} raio="48cqw" duracao="95s" inversa deslocamento={30} />
 
-      <div className="absolute left-1/2 top-1/2 flex aspect-square w-[34%] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white p-[4.5%] shadow-[0_0_60px_10px_rgba(201,205,240,0.25)]">
-        <Image src={LOGO_HUB} alt="Atlas HUB" loading="eager" sizes="200px" className="h-auto w-full" />
+      <div className="absolute left-1/2 top-1/2 w-[46%] -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_0_30px_rgba(201,205,240,0.35)]">
+        <LogoGrupo variante="mono" className="h-auto w-full text-white" />
       </div>
     </div>
   )
