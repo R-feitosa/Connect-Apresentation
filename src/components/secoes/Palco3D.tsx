@@ -13,6 +13,18 @@ import { PalcoOrbita } from './PalcoOrbita'
  * Sem WebGL — ou se algo falhar — cai para a versao em CSS, com os
  * mesmos logos em 2D.
  */
+// Testar WebGL cria um contexto: caro (sobretudo em PC fraco). Faz uma vez.
+let temWebglCache: boolean | null = null
+function temWebgl() {
+  if (temWebglCache === null) {
+    const teste = document.createElement('canvas')
+    const gl = teste.getContext('webgl2') || teste.getContext('webgl')
+    temWebglCache = !!gl
+    gl?.getExtension('WEBGL_lose_context')?.loseContext()
+  }
+  return temWebglCache
+}
+
 export function Palco3D() {
   const host = useRef<HTMLDivElement>(null)
   const canvas = useRef<HTMLCanvasElement>(null)
@@ -21,14 +33,15 @@ export function Palco3D() {
   useEffect(() => {
     let desmontar: (() => void) | undefined
     let cancelado = false
-    const teste = document.createElement('canvas')
-    const temWebgl = !!(teste.getContext('webgl2') || teste.getContext('webgl'))
-    if (!temWebgl) {
+    if (!temWebgl()) {
       queueMicrotask(() => setEstado('sem-3d'))
       return
     }
-    import('@/lib/logos3d/palco')
-      .then(({ montarPalco }) => {
+    // Sai do quadro da interacao (clique/tecla que montou o slide): o
+    // palco so comeca depois que o navegador pintou a resposta.
+    const depoisDoQuadro = () => new Promise<void>((r) => requestAnimationFrame(() => setTimeout(r, 0)))
+    Promise.all([import('@/lib/logos3d/palco'), depoisDoQuadro()])
+      .then(([{ montarPalco }]) => {
         if (cancelado || !host.current || !canvas.current) return
         desmontar = montarPalco(host.current, canvas.current, {
           texturaPonto: iconePonto.src,

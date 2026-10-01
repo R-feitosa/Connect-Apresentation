@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { startTransition, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { Hero } from '@/components/secoes/Hero'
 import { Problema } from '@/components/secoes/Problema'
@@ -73,11 +73,15 @@ export function ModoEstande() {
   })
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
+  // Em transicao: montar o proximo slide e trabalho pesado e nao deve
+  // segurar a resposta ao clique/tecla (INP).
   const mudarSlide = useCallback((delta: 1 | -1) => {
-    setEstado((atual) => ({
-      indice: (atual.indice + delta + SLIDES.length) % SLIDES.length,
-      sentido: delta,
-    }))
+    startTransition(() =>
+      setEstado((atual) => ({
+        indice: (atual.indice + delta + SLIDES.length) % SLIDES.length,
+        sentido: delta,
+      })),
+    )
   }, [])
 
   useEffect(() => {
@@ -143,6 +147,9 @@ export function ModoEstande() {
     return () => window.removeEventListener('keydown', aoTeclar)
   }, [ativo, mudarSlide, reiniciarTemporizador])
 
+  // O slide que sai e o MESMO elemento que estava na tela (mesma `key`):
+  // so troca a classe de animacao. Com chaves diferentes ele seria
+  // remontado do zero so para sair — inclusive a cena 3D do Hero.
   // Guarda o slide anterior so pelo tempo da transicao, pra ele poder
   // "sair" enquanto o novo "entra" — o efeito de deslizar de verdade
   // precisa dos dois montados ao mesmo tempo por um instante. Comparado
@@ -177,7 +184,7 @@ export function ModoEstande() {
               const { Componente: SlideQueSai, fundo: fundoSaida } = SLIDES[saindo.indice]
               return (
                 <div
-                  key={`sai-${saindo.indice}`}
+                  key={`slide-${saindo.indice}`}
                   className={cn(
                     'absolute inset-0',
                     fundoSaida,
@@ -193,7 +200,7 @@ export function ModoEstande() {
               )
             })()}
           <div
-            key={`entra-${estado.indice}`}
+            key={`slide-${estado.indice}`}
             className={cn(
               'absolute inset-0',
               fundoAtual,
@@ -208,7 +215,7 @@ export function ModoEstande() {
       )}
       <button
         type="button"
-        onClick={() => setAtivo((v) => !v)}
+        onClick={() => startTransition(() => setAtivo((v) => !v))}
         className="fixed bottom-5 right-5 z-[70] flex items-center gap-2 rounded-full border border-borda-forte bg-fundo-alto px-4 py-2.5 font-mono text-[0.7rem] uppercase tracking-[0.15em] text-texto-suave shadow-lg transition-colors hover:border-hub/50 hover:text-hub"
         aria-pressed={ativo}
       >

@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { LOGOS_3D } from './dados'
-import { FabricaMateriais, construirLogo, construirLogoGrupo, construirMedalha, construirPonto, descartarArvore } from './construir'
+import { FabricaMateriais, construirLogo, construirLogoGrupo, construirMedalha, construirPonto } from './construir'
 import { MARCAS_EMPRESAS } from '@/content/marcas-empresas'
 
 /**
@@ -11,7 +11,9 @@ import { MARCAS_EMPRESAS } from '@/content/marcas-empresas'
  *
  * Feita para a TV do estande (PC fraco, ligada o dia todo):
  *  - um renderer so, DPR limitado a 1.5, sem sombras nem pos-processamento;
- *  - geometria montada uma vez; por quadro so mudam transformacoes;
+ *  - geometria montada uma vez por pagina, em fatias entre quadros (nao
+ *    trava clique nem tecla); cada palco usa clones dela, e por quadro so
+ *    mudam transformacoes;
  *  - para quando sai da tela, quando a aba some e quando o modo estande
  *    cobre a pagina (so a copia de dentro do slide anima);
  *  - com movimento reduzido, desenha um quadro parado.
@@ -47,34 +49,36 @@ export function montarPalco(host: HTMLElement, canvas: HTMLCanvasElement, opcoes
   baixo.position.set(0, -6, 3)
   cena.add(chave, contra, baixo)
 
-  const mats = new FabricaMateriais()
   const tudo = new THREE.Group()
   cena.add(tudo)
-
-  // Nucleo: o logo do grupo
-  const nucleo = construirLogoGrupo(mats, 0.6)
-  tudo.add(nucleo)
-
-  // Orbitas
-  const texturaPonto = new THREE.TextureLoader().load(opcoes.texturaPonto, () => desenharUmaVez())
-  texturaPonto.colorSpace = THREE.SRGBColorSpace
-  texturaPonto.anisotropy = 4
-
-  const item = (codigo: string): THREE.Object3D => {
-    if (codigo === 'ponto') return construirPonto(LOGOS_3D.ponto_texto, texturaPonto, mats, ALTURA_ITEM)
-    if (codigo in MARCAS_EMPRESAS) {
-      return construirMedalha(MARCAS_EMPRESAS[codigo as keyof typeof MARCAS_EMPRESAS], mats, DIAMETRO_MEDALHA)
-    }
-    return construirLogo(LOGOS_3D[codigo], mats, { altura: ALTURA_ITEM })
-  }
-
   const matTrilho = new THREE.LineBasicMaterial({ color: 0xc9cdf0, transparent: true, opacity: 0.22, fog: true })
-  const orbitas = [
-    criarOrbita(INTERNA, 1.95, 0.46, -0.3, 1, 70),
-    criarOrbita(EXTERNA, 3.05, 0.36, 0.22, -1, 95),
-  ]
 
-  function criarOrbita(codigos: string[], raio: number, tiltX: number, tiltZ: number, sentido: number, segundos: number) {
+  type Orbita = {
+    giro: THREE.Group
+    itens: { obj: THREE.Object3D; fase: number }[]
+    velocidade: number
+  }
+  let nucleo: THREE.Object3D | null = null
+  let orbitas: Orbita[] = []
+  let cancelado = false
+
+  // Os modelos sao montados uma vez por pagina (em fatias, sem travar a
+  // interacao) e cada palco usa clones — geometria e material
+  // compartilhados. Montar o palco de novo (slide do modo estande) fica
+  // quase de graca.
+  obterModelos(opcoes.texturaPonto).then((m) => {
+    if (cancelado) return
+    nucleo = m.nucleo.clone()
+    tudo.add(nucleo)
+    orbitas = [
+      criarOrbita(m, INTERNA, 1.95, 0.46, -0.3, 1, 70),
+      criarOrbita(m, EXTERNA, 3.05, 0.36, 0.22, -1, 95),
+    ]
+    medir()
+    iniciar()
+  })
+
+  function criarOrbita(m: Modelos, codigos: string[], raio: number, tiltX: number, tiltZ: number, sentido: number, segundos: number): Orbita {
     const inclinacao = new THREE.Group()
     inclinacao.rotation.set(tiltX, 0, tiltZ)
     const giro = new THREE.Group()
@@ -87,14 +91,14 @@ export function montarPalco(host: HTMLElement, canvas: HTMLCanvasElement, opcoes
     inclinacao.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), matTrilho))
 
     const itens = codigos.map((c, i) => {
-      const obj = item(c)
+      const obj = m.itens.get(c)!.clone()
       const a = (i / codigos.length) * Math.PI * 2 + (sentido < 0 ? 0.5 : 0)
       obj.position.set(Math.cos(a) * raio, 0, Math.sin(a) * raio)
       giro.add(obj)
       return { obj, fase: i * 1.7 }
     })
     tudo.add(inclinacao)
-    return { inclinacao, giro, itens, velocidade: (sentido * Math.PI * 2) / segundos }
+    return { giro, itens, velocidade: (sentido * Math.PI * 2) / segundos }
   }
 
   // Estado de animacao
@@ -113,6 +117,7 @@ export function montarPalco(host: HTMLElement, canvas: HTMLCanvasElement, opcoes
   let pronto = false
 
   function posicionar(seg: number) {
+    if (!nucleo) return
     nucleo.rotation.y = Math.sin(seg / 2.2) * 0.35
     nucleo.position.y = Math.sin(seg / 1.6) * 0.04
     tudo.rotation.y += (alvo.x * 0.28 - tudo.rotation.y) * 0.05
@@ -132,7 +137,7 @@ export function montarPalco(host: HTMLElement, canvas: HTMLCanvasElement, opcoes
 
   function desenhar() {
     renderer.render(cena, camera)
-    if (!pronto) {
+    if (!pronto && nucleo) {
       pronto = true
       opcoes.aoFicarPronto()
     }
@@ -208,6 +213,7 @@ export function montarPalco(host: HTMLElement, canvas: HTMLCanvasElement, opcoes
   medir()
 
   return () => {
+    cancelado = true
     cancelAnimationFrame(raf)
     ro.disconnect()
     io.disconnect()
@@ -215,9 +221,45 @@ export function montarPalco(host: HTMLElement, canvas: HTMLCanvasElement, opcoes
     host.removeEventListener('pointerenter', aoEntrar)
     host.removeEventListener('pointerleave', aoSair)
     document.removeEventListener('visibilitychange', aoVoltar)
-    descartarArvore(cena)
+    // So o que e deste palco: os trilhos. Modelos ficam no cache da pagina.
+    tudo.traverse((o) => {
+      if (o instanceof THREE.Line) o.geometry.dispose()
+    })
     matTrilho.dispose()
-    mats.descartar()
     renderer.dispose()
   }
+}
+
+interface Modelos {
+  nucleo: THREE.Object3D
+  itens: Map<string, THREE.Object3D>
+}
+
+let modelos: Promise<Modelos> | null = null
+
+/** Cede a vez ao navegador entre uma peca e outra da montagem. */
+function ceder() {
+  const s = (globalThis as { scheduler?: { yield?: () => Promise<void> } }).scheduler
+  return s?.yield ? s.yield() : new Promise<void>((r) => setTimeout(r, 0))
+}
+
+function obterModelos(urlTexturaPonto: string) {
+  modelos ??= (async () => {
+    const mats = new FabricaMateriais()
+    const textura = await new THREE.TextureLoader().loadAsync(urlTexturaPonto)
+    textura.colorSpace = THREE.SRGBColorSpace
+    textura.anisotropy = 4
+    await ceder()
+    const nucleo = construirLogoGrupo(mats, 0.6)
+    const itens = new Map<string, THREE.Object3D>()
+    for (const codigo of [...INTERNA, ...EXTERNA]) {
+      await ceder()
+      if (codigo === 'ponto') itens.set(codigo, construirPonto(LOGOS_3D.ponto_texto, textura, mats, ALTURA_ITEM))
+      else if (codigo in MARCAS_EMPRESAS) {
+        itens.set(codigo, construirMedalha(MARCAS_EMPRESAS[codigo as keyof typeof MARCAS_EMPRESAS], mats, DIAMETRO_MEDALHA))
+      } else itens.set(codigo, construirLogo(LOGOS_3D[codigo], mats, { altura: ALTURA_ITEM }))
+    }
+    return { nucleo, itens }
+  })()
+  return modelos
 }
