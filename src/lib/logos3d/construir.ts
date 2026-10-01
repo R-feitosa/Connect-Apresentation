@@ -231,13 +231,15 @@ export function construirPonto(texto: Logo3D, textura: THREE.Texture, mats: Fabr
  * monograma "R" salta um pouco alem dele, e "EITOSA"/"GROUP" ficam em
  * relevo mais baixo. Sobre o navy do Hero, as letras usam a versao clara
  * da marca (a mesma do rodape) e os triangulos, as cores oficiais
- * levemente avivadas para nao sumirem no fundo.
+ * avivadas. Atras de cada triangulo vai uma placa lavanda um pouco maior,
+ * que forma um contorno claro: sem ela o triangulo azul se confunde com
+ * o fundo navy.
  */
 export function construirLogoGrupo(mats: FabricaMateriais, altura: number) {
   const [, , vw, vh] = LOGO_VIEWBOX.split(' ').map(Number)
   const s = altura / vh
   const esp = altura * 0.1
-  const corTri: Record<string, string> = { '#1a2253': '#34449c', '#5f0006': '#a3172a' }
+  const corTri: Record<string, string> = { '#1a2253': '#5d6fd8', '#5f0006': '#b01c30' }
   const pecas: { d: string; cor: string; prof: number; z: number }[] = [
     ...LOGO_TRI.map((t) => ({ d: t.d, cor: corTri[t.color.toLowerCase()] ?? '#9a9a9a', prof: esp, z: 0 })),
     { d: LOGO_MONO, cor: '#ffffff', prof: esp * 1.2, z: 0 },
@@ -260,6 +262,20 @@ export function construirLogoGrupo(mats: FabricaMateriais, altura: number) {
     geo.scale(s, -s, 1)
     geo.translate((-vw / 2) * s, (vh / 2) * s, -esp / 2)
     grupo.add(new THREE.Mesh(geo, mats.cor(p.cor, true)))
+
+    if (i < LOGO_TRI.length) {
+      const placa = extrudar(formas, esp * 0.4, 0)
+      placa.scale(s, -s, 1)
+      placa.translate((-vw / 2) * s, (vh / 2) * s, 0)
+      placa.computeBoundingBox()
+      const c = placa.boundingBox!.getCenter(new THREE.Vector3())
+      const tam = placa.boundingBox!.getSize(new THREE.Vector3())
+      const borda = altura * 0.035
+      placa.translate(-c.x, -c.y, 0)
+      placa.scale(1 + (2 * borda) / tam.x, 1 + (2 * borda) / tam.y, 1)
+      placa.translate(c.x, c.y, -esp / 2 - esp * 0.45)
+      grupo.add(new THREE.Mesh(placa, mats.cor('#c9cdf0', true)))
+    }
   })
   return grupo
 }
